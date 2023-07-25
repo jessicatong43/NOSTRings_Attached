@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../index.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<div>Hello World</div>} />
+          <Route path="/" element={<div>Hello World</div>} />
           {/* <Route path='/' element={<Explore/>} />
           <Route path='/profile' element={<PrivateRoute />} >
             <Route path='/profile' element={<Profile/>} />
@@ -20,7 +20,7 @@ function App() {
           <Route path='/create-newsletter' element={<CreateListing/>} />
           <Route path='/edit-edition/:editionId' element={<EditListing/>} /> */}
         </Routes>
-        <Navbar/>
+        {/* <Navbar /> */}
       </Router>
 
       <ToastContainer />
