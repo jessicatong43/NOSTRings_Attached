@@ -1,4 +1,24 @@
 {
+  "name": "NOSTRings_Attached",
+  "version": "1.0.0",
+  "description": "Pay-per-edition newsletter",
+  "main": "index.jsx",
+  "scripts": {
+    "dev": "npx webpack --watch --mode development & npx nodemon --watch ./server ./server/index.js",
+    "build": "npx webpack --mode production",
+    "start": "node ./server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessicatong43/NOSTRings_Attached.git"
+  },
+  "author": "Jessica Tong, Nicholas Milligan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jessicatong43/NOSTRings_Attached/issues"
+  },
+  "homepage": "https://github.com/jessicatong43/NOSTRings_Attached#readme",
   "dependencies": {
     "axios": "^1.4.0",
     "compression": "^1.7.4",
