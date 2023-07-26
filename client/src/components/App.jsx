@@ -17,7 +17,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<div>Hello World</div>} />
-          <Route path='/newsletter/:newsletterId' element={<Newsletter />} />
+          <Route path="/newsletter/:newsletterId" element={<Newsletter />} />
           {/* <Route path='/' element={<Explore/>} />
           <Route path='/profile' element={<PrivateRoute />} >
             <Route path='/profile' element={<Profile/>} />
