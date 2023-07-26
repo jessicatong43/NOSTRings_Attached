@@ -31,8 +31,6 @@ function SignUp() {
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      const { user } = userCredential;
-
       updateProfile(auth.currentUser, {
         displayName: username,
       });
@@ -41,7 +39,7 @@ function SignUp() {
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
 
-      await setDoc(doc(db, 'users', user.uid), formDataCopy);
+      await setDoc(doc(db, 'users', userCredential.user.uid), formDataCopy);
 
       navigate('/');
 

@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase.config';
+import EditionList from '../components/EditionList';
 
 function Newsletter() {
+  const [editions, setEditions] = useState([]);
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const fetchNewsletter = async () => {
+    const docRef = doc(db, 'listings', params.listingId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setEditions(docSnap.data());
+    }
+  };
+
+  useEffect(() => {
+    fetchNewsletter();
+  }, [params.newsletterId]);
 
   return (
     <div>
-      Newsletter
+      <div>SearchBar</div>
+      <div className="newsletter-overview">
+        <div>
+          <EditionList editions={editions} />
+        </div>
+        <div>
+          Subscribe/authorInfo
+        </div>
+      </div>
     </div>
   );
 }
