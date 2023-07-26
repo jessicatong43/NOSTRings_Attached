@@ -7,6 +7,8 @@ import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 import ForgotPassword from '../pages/ForgotPassword';
 import Navbar from './Navbar';
+import Newsletter from '../pages/Newsletter';
+import NotFound from '../pages/NotFound';
 
 function App() {
   return (
@@ -15,15 +17,17 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<div>Hello World</div>} />
+          <Route path="/newsletter/:newsletterId" element={<Newsletter />} />
           {/* <Route path='/' element={<Explore/>} />
           <Route path='/profile' element={<PrivateRoute />} >
             <Route path='/profile' element={<Profile/>} />
           </Route> */}
-          <Route path='/sign-in' element={<SignIn/>} />
-          <Route path='/sign-up' element={<SignUp/>} />
-          <Route path='/forgot-password' element={<ForgotPassword/>} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           {/* <Route path='/create-newsletter' element={<CreateListing/>} />
           <Route path='/edit-edition/:editionId' element={<EditListing/>} /> */}
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
 
