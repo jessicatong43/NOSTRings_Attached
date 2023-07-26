@@ -19,7 +19,7 @@ function Navbar() {
           <li>
             <button
               type="button"
-              onClick={() => navigate('//')}
+              onClick={() => navigate('/')}
               className={current('/')
                 ? 'Colored'
                 : 'normal'}
