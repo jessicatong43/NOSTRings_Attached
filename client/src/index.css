@@ -1,3 +1,7 @@
+/* body {
+  background-color: #000017;
+} */
+
 .gradient-text {
   display: inline-block;
   -webkit-background-clip: text;
@@ -11,10 +15,6 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-
-body {
-  background-color: #000017;
 }
 
 .gradient-btn {
@@ -90,4 +90,30 @@ body {
   display: grid;
   align-items: center;
   justify-content: center;
+}
+
+.loadingSpinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.loadingSpinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #00cc66 transparent #00cc66 transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
