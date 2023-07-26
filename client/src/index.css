@@ -119,3 +119,26 @@
     transform: rotate(360deg);
   }
 }
+
+#search form {
+  margin: 30px;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+}
+
+#searchbar {
+  border: 1px solid;
+  border-radius: 11px;
+}
+
+#explore {
+  margin: 30px;
+}
+
+.newsletter-card {
+  width: 150px;
+  border: 1px solid;
+  border-color: #000;
+  border-radius: 20px;
+  padding: 30px;
+}

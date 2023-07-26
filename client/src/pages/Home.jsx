@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Search from '../components/Search';
-import Explore from './Explore';
+import Explore from '../components/Explore';
 
-function Main() {
+function Home() {
   return (
     <div>
-      Main Page
+      Home
       <Search />
       <Explore />
     </div>
   );
 }
 
-export default Main;
+export default Home;
