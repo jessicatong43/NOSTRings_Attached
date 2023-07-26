@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase.config';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-function SignUp() {
+function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: '',
   });
-  const { email, password, username } = formData;
+  const { email, password } = formData;
 
   const navigate = useNavigate();
 
@@ -29,48 +26,30 @@ function SignUp() {
     try {
       const auth = getAuth();
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      const { user } = userCredential;
+      if (userCredential.user) {
+        navigate('/');
+      }
 
-      updateProfile(auth.currentUser, {
-        displayName: username,
-      });
-
-      const formDataCopy = { ...formData };
-      delete formDataCopy.password;
-      formDataCopy.timestamp = serverTimestamp();
-
-      await setDoc(doc(db, 'users', user.uid), formDataCopy);
-
-      navigate('/');
-
-      toast.success(`Welcome ${username}`);
+      const name = await auth.currentUser.displayName;
+      toast.success(`Welcome back ${name}`);
     } catch (error) {
       console.log(error);
-      toast.error('Registration error: please use a valid email and more than 8 characters in the password!');
+      toast.error('Incorrect user credentials');
     }
   };
 
   return (
-    <div className="pageContainer">
+    <div>
       <header>
-        <p className="pageHeader">
-          Sign Up
+        <p>
+          Welcome Back
         </p>
       </header>
 
       <main>
         <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            className="nameInput"
-            placeholder="Username"
-            id="username"
-            value={username}
-            onChange={onChange}
-          />
-
           <input
             type="email"
             className="emailInput"
@@ -80,7 +59,7 @@ function SignUp() {
             onChange={onChange}
           />
 
-          <div className="passwordInputDiv">
+          <div>
             <input
               type={showPassword ? 'text' : 'password'}
               className="passwordInput"
@@ -104,20 +83,20 @@ function SignUp() {
 
           <div>
             <p>
-              Sign Up
+              Sign In
             </p>
-            <button>
+            <button type="button">
               Icon Here
             </button>
           </div>
         </form>
 
-        <Link to="/sign-in">
-          Sign In Instead
+        <Link to="/sign-up">
+          Sign Up Instead
         </Link>
       </main>
     </div>
   );
 }
 
-export default SignUp;
+export default SignIn;

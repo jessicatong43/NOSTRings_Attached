@@ -11,6 +11,10 @@ app.use(compression());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+app.get('*', (reg, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/'));
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server available at http://localhost${PORT}`);
