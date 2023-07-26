@@ -1,14 +1,14 @@
 import React from 'react';
 
 function EditionList({ editions }) {
+  console.log(editions)
 
   return (
-      <ul>
-        editions.map((edition) => (
-          <li>edition.title</li>
-        ))
-
-      </ul>
+    <div>
+      {editions.map((edition) => (
+        edition.title
+      ))}
+    </div>
   );
 }
 

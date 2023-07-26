@@ -11,11 +11,11 @@ function Newsletter() {
   const navigate = useNavigate();
 
   const fetchNewsletter = async () => {
-    const docRef = doc(db, 'listings', params.listingId);
+    const docRef = doc(db, 'Newsletters', params.newsletterId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      setEditions(docSnap.data());
+      setEditions(docSnap.data().editions);
     }
   };
 
