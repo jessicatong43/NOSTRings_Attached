@@ -53,9 +53,9 @@ function SignUp() {
   };
 
   return (
-    <div className="pageContainer">
+    <div>
       <header>
-        <p className="pageHeader">
+        <p>
           Sign Up
         </p>
       </header>
@@ -80,7 +80,7 @@ function SignUp() {
             onChange={onChange}
           />
 
-          <div className="passwordInputDiv">
+          <div>
             <input
               type={showPassword ? 'text' : 'password'}
               className="passwordInput"
