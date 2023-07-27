@@ -9,6 +9,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import Navbar from './Navbar';
 import Newsletter from '../pages/Newsletter';
 import NotFound from '../pages/NotFound';
+import NewEdition from '../pages/NewEdition';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<div>Hello World</div>} />
           <Route path="/newsletter/:newsletterId" element={<Newsletter />} />
+          <Route path="/new-edition" element={<NewEdition />} />
           {/* <Route path='/' element={<Explore/>} />
           <Route path='/profile' element={<PrivateRoute />} >
             <Route path='/profile' element={<Profile/>} />

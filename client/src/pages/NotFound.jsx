@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Newsletter() {
+function NotFound() {
   return (
     <div>
       404 Page Not Found
@@ -8,4 +8,4 @@ function Newsletter() {
   );
 }
 
-export default Newsletter;
+export default NotFound;
