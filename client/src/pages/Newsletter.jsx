@@ -9,16 +9,17 @@ import { db } from '../firebase.config';
 import EditionList from '../components/EditionList';
 import Subscribe from '../components/Subscribe';
 import Spinner from '../components/Spinner';
+import Search from '../components/Search';
 
 function Newsletter() {
   const [newsletter, setNewsletter] = useState([]);
   const [editions, setEditions] = useState([]);
+  const [displayEditions, setDisplayedEditions] = useState();
   const [loading, setLoading] = useState(true);
 
   const params = useParams();
   const navigate = useNavigate();
   const auth = getAuth();
-  console.log(editions);
 
   const fetchNewsletter = async () => {
     const docRef = doc(db, 'Newsletters', params.newsletterId);
@@ -34,6 +35,7 @@ function Newsletter() {
     });
 
     setEditions(arr);
+    setDisplayedEditions(arr);
 
     if (docSnap.exists()) {
       setNewsletter(docSnap.data());
@@ -67,13 +69,20 @@ function Newsletter() {
     navigate('/new-edition', { state: { newsletterId: params.newsletterId } });
   };
 
+  const handleSearch = (searchStr) => {
+    const filtered = editions.filter(
+      (item) => item.name.toLowerCase().includes(searchStr.toLowerCase()),
+    );
+    setDisplayedEditions(filtered);
+  };
+
   if (loading) {
     return <Spinner />;
   }
 
   return (
     <div className="newsletter-page">
-      <div>SearchBar</div>
+      <Search handleSearch={handleSearch} />
       <div className="newsletter-overview">
         <div className="newsletter-editions">
           <EditionList editions={editions || []} />

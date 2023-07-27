@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useId } from 'react';
 
-function Search() {
+function Search({ handleSearch }) {
+  const searchId = useId();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submitted');
-    // TODO: Post request to db
+    handleSearch(e.target.searchString.value);
   };
 
   return (
     <section id="search">
-      <form>
-        <input id="searchbar" type="search" placeholder="Search" />
-        <button type="submit" onSubmit={handleSubmit}>Search</button>
+      <form type="submit" onSubmit={handleSubmit} htmlFor={searchId}>
+        <input id={searchId} name="searchString" type="search" placeholder="Search" className="searchInput" />
+        <button type="submit">Search</button>
       </form>
     </section>
   );

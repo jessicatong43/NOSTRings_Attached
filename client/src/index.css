@@ -162,7 +162,7 @@ ul {
   grid-template-columns: 1fr 60px;
 }
 
-#searchbar {
+.searchInput {
   border: 1px solid;
   border-radius: 11px;
 }
