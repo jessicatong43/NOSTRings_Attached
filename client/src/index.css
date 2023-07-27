@@ -61,8 +61,10 @@
   width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  min-height: 8vh;
+  justify-content: space-between;
+  min-height: 60px;
+  background: rgb(29, 0, 123);
+  padding: 0 30px;
 }
 
 .text-card {
@@ -152,4 +154,27 @@ ul {
   display: grid;
   align-items: center;
   justify-content: flex-start;
+}
+
+#search form {
+  margin: 30px;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+}
+
+#searchbar {
+  border: 1px solid;
+  border-radius: 11px;
+}
+
+#explore {
+  margin: 30px;
+}
+
+.newsletter-card {
+  width: 150px;
+  border: 1px solid;
+  border-color: #000;
+  border-radius: 20px;
+  padding: 30px;
 }

@@ -14,42 +14,36 @@ function Navbar() {
 
   return (
     <header>
-      <nav>
-        <ul>
-          <li>
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className={current('/')
-                ? 'Colored'
-                : 'normal'}
-            >
-              Explore
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => navigate('/dashboard')}
-              className={current('/dashboard')
-                ? 'Colored'
-                : 'normal'}
-            >
-              Dashboard
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => navigate('/profile')}
-              className={current('/profile')
-                ? 'Colored'
-                : 'normal'}
-            >
-              Profile
-            </button>
-          </li>
-        </ul>
+      <nav className="nav-bar">
+        <div>
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className={current('/')
+              ? 'Colored'
+              : 'normal'}
+          >
+            Explore
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/dashboard')}
+            className={current('/dashboard')
+              ? 'Colored'
+              : 'normal'}
+          >
+            Dashboard
+          </button>
+        </div>
+        <button
+          type="button"
+          onClick={() => navigate('/profile')}
+          className={current('/profile')
+            ? 'Colored'
+            : 'normal'}
+        >
+          Profile
+        </button>
       </nav>
     </header>
   );
