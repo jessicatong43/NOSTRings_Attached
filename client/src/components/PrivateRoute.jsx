@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthStatus } from '../hooks/useAuthStatus';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Spinner from './Spinner';
 
 function PrivateRoute() {
-  const { loggedIn, checkingStatus } = useAuthStatus();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [checkingStatus, setCheckingStatus] = useState(true);
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    if (isMounted) {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setLoggedIn(!!user);
+        }
+        setCheckingStatus(false);
+      });
+    }
+  }, []);
 
   if (checkingStatus) {
     return <Spinner />;

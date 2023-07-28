@@ -6,7 +6,6 @@ import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase.config';
 
 function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -80,7 +79,7 @@ function SignUp() {
 
           <div>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="password"
               className="passwordInput"
               placeholder="Password"
               id="password"
@@ -88,12 +87,6 @@ function SignUp() {
               onChange={onChange}
             />
 
-            {/* <img
-              src={visibilityIcon}
-              alt="show password"
-              className="showPassword"
-              onClick={() => setShowPassword((prevState) => !prevState)}
-            /> */}
           </div>
 
           <Link to="/forgot-password">

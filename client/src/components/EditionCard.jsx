@@ -2,7 +2,9 @@ import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function EditionList({ details }) {
-  console.log(details);
+    const handleClick = () => {
+      navigate('/payment', )
+    }
 
   return (
     <div className="text-card">
