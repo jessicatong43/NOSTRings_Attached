@@ -1,6 +1,7 @@
 import React from 'react';
 import EditionCard from './EditionCard';
 
+
 function EditionList({ editions }) {
 
   return (

@@ -67,7 +67,7 @@ function Newsletter() {
 
   const handleNewEdition = () => {
     console.log(newsletter)
-    navigate('/new-edition', { state: { newsletterId: params.newsletterId, ownerId: newsletter.creator } });
+    navigate('/new-edition', { state: { newsletterId: params.newsletterId, creatorId: newsletter.creator } });
   };
 
   const handleSearch = (searchStr) => {
