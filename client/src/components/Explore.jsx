@@ -6,8 +6,6 @@ import ExploreCard from './ExploreCard';
 
 function Explore() {
   const [newsletters, setNewsletters] = useState([]);
-  // const params = useParams();
-  const navigate = useNavigate();
 
   console.log('newsletters: ', newsletters);
 

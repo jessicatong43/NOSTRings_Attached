@@ -11,6 +11,7 @@ import Newsletter from '../pages/Newsletter';
 import NotFound from '../pages/NotFound';
 import NewEdition from '../pages/NewEdition';
 import Home from '../pages/Home';
+import Profile from '../pages/Profile';
 
 function App() {
   return (
@@ -21,10 +22,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/newsletter/:newsletterId" element={<Newsletter />} />
           <Route path="/new-edition" element={<NewEdition />} />
-          {/* <Route path='/' element={<Explore/>} />
-          <Route path='/profile' element={<PrivateRoute />} >
-            <Route path='/profile' element={<Profile/>} />
-          </Route> */}
+          {/* <Route path='/' element={<Explore/>} /> */}
+          <Route path='/profile' element={<Profile/>} />
+          {/* </Route> */}
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
