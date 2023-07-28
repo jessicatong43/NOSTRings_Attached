@@ -43,6 +43,7 @@ function Explore() {
           <ExploreCard
             newsletter={newsletter}
             key={newsletter.id}
+            newsletterId={newsletter.id}
           />
         ))}
       </section>

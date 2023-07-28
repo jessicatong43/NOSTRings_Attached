@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function ExploreCard({ newsletter }) {
+function ExploreCard({ newsletter, newsletterId }) {
+  console.log(newsletter)
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/newsletter/${newsletter.id}`);
+    navigate(`/newsletter/${newsletterId}`);
   };
 
   return (

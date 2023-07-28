@@ -88,7 +88,8 @@ function Profile() {
               {newsletters.map((newsletter) => (
                 <ExploreCard
                   key={newsletter.id}
-                  newsletter={newsletter}
+                  newsletter={newsletter.data}
+                  newsletterId={newsletter.id}
                 />
               ))}
             </ul>
