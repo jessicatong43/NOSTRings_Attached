@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import {
+  collection, getDocs, query, orderBy, limit,
+} from 'firebase/firestore';
 import { db } from '../firebase.config';
 import ExploreCard from './ExploreCard';
 
 function Explore() {
   const [newsletters, setNewsletters] = useState([]);
-  // const params = useParams();
-  const navigate = useNavigate();
 
   console.log('newsletters: ', newsletters);
 
   const fetchNewsletters = async () => {
-    const querySnapshot = await getDocs(collection(db, 'Newsletters'));
+    const newslettersRef = collection(db, 'Newsletters');
+    const q = query(
+      newslettersRef,
+      orderBy('created', 'desc'),
+      limit(10),
+    );
+    const querySnapshot = await getDocs(q);
     const allDocs = [];
 
     querySnapshot.forEach((doc) => {
@@ -38,6 +43,7 @@ function Explore() {
           <ExploreCard
             newsletter={newsletter}
             key={newsletter.id}
+            newsletterId={newsletter.id}
           />
         ))}
       </section>

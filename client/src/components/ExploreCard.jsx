@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function ExploreCard({ newsletter }) {
+function ExploreCard({ newsletter, newsletterId }) {
+  console.log(newsletter)
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/newsletter/${newsletter.id}`);
+    navigate(`/newsletter/${newsletterId}`);
   };
 
   return (
     <article className='newsletter-card' onClick={handleClick}>
       <h3>{newsletter.title}</h3>
-      <h6>By {newsletter.Author}</h6>
+      <h6>By {newsletter.author}</h6>
     </article>
   );
 }

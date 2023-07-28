@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import {
   getStorage, ref, uploadBytesResumable,
@@ -12,7 +12,7 @@ import Spinner from '../components/Spinner';
 import { db } from '../firebase.config';
 
 function NewEdition() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: '',
     source: '',
@@ -21,31 +21,28 @@ function NewEdition() {
     file: {},
   });
 
+  const [creator, setCreator] = useState(false);
+
   const {
     title, price, file,
   } = formData;
 
-  const auth = getAuth();
   const navigate = useNavigate();
-  const isMounted = useRef(true);
 
   const { state } = useLocation();
-  const { newsletterId } = state;
+  const { newsletterId, creatorId } = state;
 
-  // useEffect(() => {
-  //   if (isMounted) {
-  //     onAuthStateChanged(auth, (user) => {
-  //       if (user.uid !== ) {
-  //         navigate('/sign-in');
-  //       }
-  //     });
-  //   }
-
-  //   return () => {
-  //     isMounted.current = false;
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isMounted, auth, navigate]);
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user.uid === creatorId) {
+        setCreator(true);
+      } else {
+        setCreator(false);
+      }
+      setLoading(false);
+    });
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -62,9 +59,6 @@ function NewEdition() {
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the
-          // total number of bytes to be uploaded
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Upload is ${progress}% done`);
           switch (snapshot.state) {
@@ -82,8 +76,6 @@ function NewEdition() {
           reject(error);
         },
         () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             resolve(downloadURL);
           });
@@ -101,14 +93,12 @@ function NewEdition() {
       created: serverTimestamp(),
     };
 
-    console.log(file[0])
-
     delete formDataCopy.file;
 
     const docRef = await addDoc(collection(db, 'Newsletters', newsletterId, 'editions'), formDataCopy);
     setLoading(false);
     toast.success('You added a new edition!');
-    navigate(`/newsletters/${newsletterId}`); // Later navigate to /newsletters/${newsletterId}/editionId to view
+    navigate(`/newsletter/${newsletterId}`); // Later navigate to /newsletters/${newsletterId}/editionId(docRef.id) to view
   };
 
   const onMutate = (e) => {
@@ -131,6 +121,10 @@ function NewEdition() {
 
   if (loading) {
     return <Spinner />;
+  }
+
+  if (!creator) {
+    return <div>Sorry, you do not own this newsletter</div>;
   }
 
   return (

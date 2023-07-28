@@ -11,6 +11,10 @@ import Newsletter from '../pages/Newsletter';
 import NotFound from '../pages/NotFound';
 import NewEdition from '../pages/NewEdition';
 import Home from '../pages/Home';
+import Payment from '../pages/Payment';
+import CreateNewsletter from '../pages/CreateNewsletter';
+import Profile from '../pages/Profile';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   return (
@@ -21,6 +25,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/newsletter/:newsletterId" element={<Newsletter />} />
           <Route path="/new-edition" element={<NewEdition />} />
+          <Route path="/payment/:invoiceId" element={<Payment />} />
+          <Route path="/create-newsletter" element={<CreateNewsletter />} />
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           {/* <Route path='/' element={<Explore/>} />
           <Route path='/profile' element={<PrivateRoute />} >
             <Route path='/profile' element={<Profile/>} />
