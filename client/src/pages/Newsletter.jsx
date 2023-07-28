@@ -14,7 +14,7 @@ import Search from '../components/Search';
 function Newsletter() {
   const [newsletter, setNewsletter] = useState([]);
   const [editions, setEditions] = useState([]);
-  const [displayEditions, setDisplayedEditions] = useState();
+  const [displayedEditions, setDisplayedEditions] = useState();
   const [loading, setLoading] = useState(true);
 
   const params = useParams();
@@ -42,7 +42,7 @@ function Newsletter() {
       setLoading(false);
     } else {
       navigate('/');
-      toast.error('Listing does not exist');
+      toast.error('Sorry, we could not find this newsletter');
     }
   };
 
@@ -66,12 +66,13 @@ function Newsletter() {
   };
 
   const handleNewEdition = () => {
-    navigate('/new-edition', { state: { newsletterId: params.newsletterId } });
+    console.log(newsletter)
+    navigate('/new-edition', { state: { newsletterId: params.newsletterId, ownerId: newsletter.creator } });
   };
 
   const handleSearch = (searchStr) => {
     const filtered = editions.filter(
-      (item) => item.name.toLowerCase().includes(searchStr.toLowerCase()),
+      (item) => item.title.toLowerCase().includes(searchStr.toLowerCase()),
     );
     setDisplayedEditions(filtered);
   };
@@ -85,7 +86,10 @@ function Newsletter() {
       <Search handleSearch={handleSearch} />
       <div className="newsletter-overview">
         <div className="newsletter-editions">
-          <EditionList editions={editions || []} />
+          {displayedEditions?.length > 0
+            ? <EditionList editions={displayedEditions} />
+            : <div>No editions found</div>}
+
         </div>
         <div className="newsletter-info">
           <Subscribe handleSubscribe={handleSubscribe} />

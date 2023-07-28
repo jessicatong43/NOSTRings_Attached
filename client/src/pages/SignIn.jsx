@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 function SignIn() {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -61,20 +60,13 @@ function SignIn() {
 
           <div>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="password"
               className="passwordInput"
               placeholder="Password"
               id="password"
               value={password}
               onChange={onChange}
             />
-
-            {/* <img
-              src={visibilityIcon}
-              alt="show password"
-              className="showPassword"
-              onClick={() => setShowPassword((prevState) => !prevState)}
-            /> */}
           </div>
 
           <Link to="/forgot-password">

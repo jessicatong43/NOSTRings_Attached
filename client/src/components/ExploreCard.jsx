@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ExploreCard({ newsletter }) {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function ExploreCard({ newsletter }) {
   return (
     <article className='newsletter-card' onClick={handleClick}>
       <h3>{newsletter.title}</h3>
-      <h6>By {newsletter.Author}</h6>
+      <h6>By {newsletter.author}</h6>
     </article>
   );
 }
