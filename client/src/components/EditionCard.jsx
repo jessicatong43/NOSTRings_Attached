@@ -3,10 +3,10 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function EditionCard({ details }) {
   const navigate = useNavigate();
+  console.log(details)
 
   const handleClick = () => {
-
-    navigate('/payment/payId');
+    navigate(`/payment/${details.newsletter}/${details.id}`);
   }
 
   return (

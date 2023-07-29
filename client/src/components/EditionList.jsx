@@ -3,6 +3,7 @@ import EditionCard from './EditionCard';
 
 
 function EditionList({ editions }) {
+  console.log(editions)
 
   return (
     <>
