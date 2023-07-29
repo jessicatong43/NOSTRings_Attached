@@ -40,15 +40,16 @@ function SignIn() {
   };
 
   return (
-    <div>
+    <div className="sign-in-container">
       <header>
-        <p>
+        <h3>
           Welcome Back
-        </p>
+        </h3>
+        <br />
       </header>
 
-      <main>
-        <form onSubmit={onSubmit}>
+      <main className="sign-in-main">
+        <form className="sign-in-form" onSubmit={onSubmit}>
           <input
             type="email"
             className="emailInput"
@@ -57,23 +58,20 @@ function SignIn() {
             value={email}
             onChange={onChange}
           />
-
-          <div>
-            <input
-              type="password"
-              className="passwordInput"
-              placeholder="Password"
-              id="password"
-              value={password}
-              onChange={onChange}
-            />
-          </div>
+          <input
+            type="password"
+            className="passwordInput"
+            placeholder="Password"
+            id="password"
+            value={password}
+            onChange={onChange}
+          />
 
           <Link to="/forgot-password">
-            Forgot Password
+            <small>Forgot Password</small>
           </Link>
 
-          <div>
+          <div id="sign-in-button">
             <button type="submit">
               Sign In
             </button>
@@ -81,7 +79,7 @@ function SignIn() {
         </form>
 
         <Link to="/sign-up">
-          Sign Up Instead
+          <small>Sign Up Instead</small>
         </Link>
       </main>
     </div>

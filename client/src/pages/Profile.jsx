@@ -60,41 +60,45 @@ function Profile() {
 
   return (
     <div className="profile">
-      <header className="profileHeader">
-        <p className="pageHeader">Profile</p>
-        <button
-          type="button"
-          onClick={onLogout}
-          className="logOut"
-        >
-          Logout
-        </button>
-      </header>
 
-      <main>
+      <main className="profile-grid">
+        <section>
+          <div className="profile-newsletter-header">
+            <h3>Your Newsletters</h3>
+            <Link to="/create-newsletter" className="createNewsletter">
+              <p>+ Create</p>
+            </Link>
+          </div>
+          <div>
+            {!loading && newsletters?.length > 0 ? (
+              <ul className="yourNewsletters">
+                {newsletters.map((newsletter) => (
+                  <ExploreCard
+                    key={newsletter.id}
+                    newsletter={newsletter.data}
+                    newsletterId={newsletter.id}
+                  />
+                ))}
+              </ul>
+            ) : <p>You do not have any newsletters yet</p> }
+          </div>
+        </section>
 
-        <div className="profileCard">
-          <p>{`Username: ${auth.currentUser.displayName || null}`}</p>
-          <p>{`Email: ${auth.currentUser.email || null}`}</p>
-        </div>
-
-        <Link to="/create-newsletter" className="createNewsletter">
-          <p>Create your own newsletter!</p>
-        </Link>
-        {!loading && newsletters?.length > 0 ? (
-          <>
-            <p>Your Newsletters</p>
-            <ul>
-              {newsletters.map((newsletter) => (
-                <ExploreCard
-                  key={newsletter.id}
-                  newsletter={newsletter.data}
-                  newsletterId={newsletter.id}
-                />
-              ))}
-            </ul>
-          </>
-        ) : <p>You do not have any newsletters yet</p> }
+        <section className="user-info">
+          <small>Username</small>
+          <p>{auth.currentUser.displayName || null}</p>
+          <br />
+          <small>Email</small>
+          <p>{auth.currentUser.email || null}</p>
+          <br />
+          <button
+            type="button"
+            onClick={onLogout}
+            className="logOut"
+          >
+            Logout
+          </button>
+        </section>
       </main>
     </div>
   );

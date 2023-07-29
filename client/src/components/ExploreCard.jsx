@@ -11,8 +11,11 @@ function ExploreCard({ newsletter, newsletterId }) {
 
   return (
     <article className='newsletter-card' onClick={handleClick}>
-      <h3>{newsletter.title}</h3>
-      <h6>By {newsletter.author}</h6>
+      <div>
+        <h3>{newsletter.title}</h3>
+        <h5>By {newsletter.author}</h5>
+      </div>
+      <small>{newsletter.subscribers.length} subscribers</small>
     </article>
   );
 }
