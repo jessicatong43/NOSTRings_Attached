@@ -25,7 +25,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/newsletter/:newsletterId" element={<Newsletter />} />
           <Route path="/new-edition" element={<NewEdition />} />
-          <Route path="/payment/:invoiceId" element={<Payment />} />
+          <Route path="/payment/:newsletterId/:editionId" element={<Payment />} />
           <Route path="/create-newsletter" element={<CreateNewsletter />} />
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
