@@ -31,7 +31,9 @@ function Newsletter() {
     const [editionsSnap, docSnap] = await Promise.all([getDocs(q), getDoc(docRef)]);
     const arr = [];
     editionsSnap.docs.forEach((d) => {
-      arr.push(d.data());
+      const data = d.data();
+      data.id = d.id;
+      arr.push(data);
     });
 
     setEditions(arr);
@@ -66,8 +68,7 @@ function Newsletter() {
   };
 
   const handleNewEdition = () => {
-    console.log(newsletter)
-    navigate('/new-edition', { state: { newsletterId: params.newsletterId, ownerId: newsletter.creator } });
+    navigate('/new-edition', { state: { newsletterId: params.newsletterId, creatorId: newsletter.creator } });
   };
 
   const handleSearch = (searchStr) => {

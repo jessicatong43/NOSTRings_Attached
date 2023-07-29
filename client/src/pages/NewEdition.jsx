@@ -35,6 +35,7 @@ function NewEdition() {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
+      console.log(user.uid, creatorId)
       if (user.uid === creatorId) {
         setCreator(true);
       } else {
