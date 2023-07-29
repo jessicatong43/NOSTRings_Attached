@@ -20,15 +20,16 @@ function ForgotPassword() {
   };
 
   return (
-    <div>
+    <div className="sign-in-container">
       <header>
-        <p>
-          Forgot Password
-        </p>
+        <h3>
+          Reset Password
+        </h3>
+        <br />
       </header>
 
-      <main>
-        <form onSubmit={onSubmit}>
+      <main className="sign-in-main">
+        <form className="sign-in-form" onSubmit={onSubmit}>
           <input
             type="email"
             className="emailInput"
@@ -37,19 +38,16 @@ function ForgotPassword() {
             value={email}
             onChange={onChange}
           />
-          <Link to="/sign-in">
-            Sign In
-          </Link>
 
-          <div className="signInBar">
-            <div className="signInText">
-              Send Reset Link
-            </div>
-            <button type="button" className="signInButton">
-              Icon Here
+          <div id="sign-in-button">
+            <button type="submit">
+              Reset
             </button>
           </div>
         </form>
+        <Link to="/sign-in">
+          Back to Sign In
+        </Link>
       </main>
     </div>
   );

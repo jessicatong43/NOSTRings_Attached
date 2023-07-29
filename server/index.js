@@ -2,7 +2,9 @@ require('dotenv').config();
 const path = require('path');
 const compression = require('compression');
 const axios = require('axios');
-const cors = require('cors');
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const express = require('express');
 const morgan = require('morgan');
@@ -23,6 +25,20 @@ app.get('/verifyPayment', (req, res) => {
     console.log(err);
     res.status(404).send('Error verifying payment');
   });
+});
+
+app.post('/deliver', async (req, res) => {
+  try {
+    const data = await resend.emails.send({
+      from: 'Acme <onboarding@resend.dev>',
+      to: [req.body.email],
+      subject: 'hello world',
+      html: '<strong>it works!</strong>',
+    });
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 });
 
 app.get('*', (reg, res) => {
