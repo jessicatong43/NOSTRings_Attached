@@ -21,10 +21,8 @@ function SignIn() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const auth = getAuth();
-
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       if (userCredential.user) {
@@ -34,7 +32,6 @@ function SignIn() {
       const name = await auth.currentUser.displayName;
       toast.success(`Welcome back ${name}`);
     } catch (error) {
-      console.log(error);
       toast.error('Incorrect user credentials');
     }
   };

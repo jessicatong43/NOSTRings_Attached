@@ -33,6 +33,11 @@ body {
   color: transparent;
 }
 
+.buy-btn {
+  margin: 10px;
+  width: 80px;
+}
+
 .gradient-btn {
   background: var(--gradient-1);
   border-radius: 0.5rem;
@@ -193,6 +198,13 @@ ul {
   justify-content: center;
 }
 
+.edition-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 /* ========= SEARCHBAR ========= */
 
 #search form {
@@ -206,8 +218,8 @@ ul {
   border: 1px solid;
   border-radius: 11px;
   max-width: 60vw;
+  padding: 3px 5px;
 }
-
 
 /* ========= EXPLORE ========= */
 
@@ -297,6 +309,8 @@ ul {
 }
 
 .sign-in-form {
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
