@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function EditionCard({ details }) {
   const navigate = useNavigate();
-  console.log(details)
 
   const handleClick = () => {
     navigate(`/payment/${details.newsletter}/${details.id}`);
-  }
+  };
 
   return (
     <div className="text-card">
@@ -16,7 +15,7 @@ function EditionCard({ details }) {
         Price:
         {`${details.price} sats`}
       </p>
-      <button type="gradient-btn" onClick={handleClick} >Buy!</button>
+      <button type="button" className="gradient-btn" onClick={handleClick}>Buy!</button>
       <div className="center">
         <p className="color-text card-body">{details.preview}</p>
       </div>

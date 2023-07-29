@@ -1,11 +1,21 @@
-/* body {
-  background-color: #000017;
-} */
+:root {
+  --main-text-color: #cab517;
+  --secondary-text-color: #1ab19d;
+  --gradient-1: linear-gradient(54deg,#cab517 9%,#1ab19d 91%);
+  --gradient-1-reverse: linear-gradient(54deg,#1ab19d 9%,#cab517  91%);
+  --bg-color: rgb(33, 20, 1);
+}
 
 /* Text margin & padding reset */
 h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
   margin: 0;
 	padding: 0;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--main-text-color);
 }
 
 .gradient-text {
@@ -16,7 +26,7 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
 }
 
 .color-text {
-  background: linear-gradient(54deg,#f0f 7.13%,#0ff 91%);
+  background: var(--gradient-1);
   display: inline-block;
   -webkit-background-clip: text;
   background-clip: text;
@@ -24,12 +34,13 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
 }
 
 .gradient-btn {
-  background: linear-gradient(54deg,#f0f,#0ff);
+  background: var(--gradient-1);
   border-radius: 0.5rem;
   border: none;
   margin: 20px;
   cursor: pointer;
   position: relative;
+  padding: 5px;
 }
 
 @media (max-width: 400px) {
@@ -42,19 +53,20 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
   content: "";
   position: absolute;
   inset: -.625em;
-  background: linear-gradient(54deg,#f0f,#0ff);
+  background: var(--gradient-1);
   filter: blur(1.5em);
   z-index: -1;
 }
 
 .current-btn {
-  background: linear-gradient(54deg,#0ff, #f0f);
+  background: var(--gradient-1);
   border-radius: 0.5rem;
   border: none;
   margin: 20px;
   cursor: pointer;
   position: relative;
   box-shadow: 0px 0px 4px 4px #cecece;
+  padding: 5px;
 }
 
 .center {
@@ -65,12 +77,12 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
 
 /* ========= NAV BAR ========= */
 .nav-bar {
-  width: 100vw;
+  max-width: 100vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 60px;
-  background: rgb(29, 0, 123);
+  background: rgb(30, 51, 0);
   padding: 0 30px;
 }
 
@@ -91,7 +103,7 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
 }
 
 .color-select {
-  background: linear-gradient(54deg,#f0f,#0ff);
+  background: var(--gradient-1);
   border-radius: 0.5rem;
 }
 
@@ -104,22 +116,26 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
 
 /* ========= LOADING SPINNER ========= */
 
-.loadingSpinnerContainer {
+.spinnerContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-color);
   z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.loadingSpinner {
-  width: 64px;
-  height: 64px;
+.spinner {
   border: 8px solid;
-  border-color: #00cc66 transparent #00cc66 transparent;
+  border-color: var(--main-text-color) transparent var(--secondary-text-color) transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  width: 64px;
+  height: 64px;
 }
 @keyframes spin {
   0% {
@@ -139,16 +155,18 @@ ul {
 
 .newsletter-overview {
   display: flex;
-  min-height: 90vh;
+  min-height: 80vh;
 }
 
 .newsletter-page {
-  width: 100vw;
+  max-width: 100vw;
 }
 
 .newsletter-info {
   display: grid;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   border: 1px solid #000;
   background: none;
   box-shadow: 4px 4px 20px #cecece;
@@ -169,6 +187,11 @@ ul {
   justify-content: flex-start;
 }
 
+.subscribe-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* ========= SEARCHBAR ========= */
 
@@ -176,11 +199,13 @@ ul {
   margin: 30px;
   display: grid;
   grid-template-columns: 1fr 60px;
+  max-width: 100vw;
 }
 
 .searchInput {
   border: 1px solid;
   border-radius: 11px;
+  max-width: 60vw;
 }
 
 
@@ -233,7 +258,7 @@ ul {
 
 .createNewsletter {
   width: 100px;
-  background: linear-gradient(54deg,#f0f,#0ff);
+  background: var(--gradient-1);
   color: #fff;
   border-radius: 15px;
   margin-right: 20px;
@@ -265,7 +290,7 @@ ul {
 }
 
 .sign-in-main {
-  background: linear-gradient(54deg,#f0f,#0ff);
+  background: var(--gradient-1);
   width: 400px;
   margin: auto;
   padding: 30px;
