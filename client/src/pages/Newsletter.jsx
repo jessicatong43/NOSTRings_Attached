@@ -93,15 +93,18 @@ function Newsletter() {
 
         </div>
         <div className="newsletter-info">
-          <Subscribe handleSubscribe={handleSubscribe} />
-          {(auth.currentUser && (newsletter.creator === auth.currentUser.uid))
-            ? (
-              <button type="button" className="gradient-btn" onClick={handleNewEdition}>
-                Upload a new edition!
-              </button>
-            )
-            : null}
-
+          <section className="subscribe-email">
+            <Subscribe handleSubscribe={handleSubscribe} />
+          </section>
+          <section>
+            {(auth.currentUser && (newsletter.creator === auth.currentUser.uid))
+              ? (
+                <button type="button" className="gradient-btn" onClick={handleNewEdition}>
+                  Upload a new edition!
+                </button>
+              )
+              : null}
+          </section>
         </div>
       </div>
     </div>

@@ -10,8 +10,6 @@ function Home() {
   const [newsletters, setNewsletters] = useState([]);
   const [allNewsletters, setAllNewsletters] = useState([]);
 
-  console.log('newsletters: ', newsletters);
-
   const fetchNewsletters = async () => {
     const newslettersRef = collection(db, 'Newsletters');
     const q = query(
@@ -30,7 +28,7 @@ function Home() {
     });
 
     setNewsletters(allDocs);
-    setAllNewsletters(allDocs)
+    setAllNewsletters(allDocs);
   };
 
   useEffect(() => {
@@ -46,7 +44,6 @@ function Home() {
 
   return (
     <div>
-      Home
       <Search handleSearch={handleSearch} />
       <Explore newsletters={newsletters} />
     </div>

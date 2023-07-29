@@ -43,7 +43,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-
+        RESEND_API_KEY: JSON.stringify(process.env.RESEND_API_KEY),
       },
     }),
   ],

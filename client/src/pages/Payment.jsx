@@ -10,7 +10,7 @@ import { db } from '../firebase.config';
 import Spinner from '../components/Spinner';
 
 function Payment() {
-  const [details, setDetails] = useState({ email: '', address: '', price: 0 });
+  const [details, setDetails] = useState({ email: '', address: '', price: 0, source: '' });
   const [loading, setLoading] = useState(true);
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
   const [invoiceDetails, setInvoiceDetails] = useState({});
@@ -19,7 +19,6 @@ function Payment() {
 
   const fetchLn = async () => {
     try {
-      console.log(details.address);
       const ln = new LightningAddress(details.address);
 
       await ln.fetch();
@@ -30,7 +29,6 @@ function Payment() {
       });
 
       if (!invoice.verify) {
-        console.log(invoice)
         toast.error('Sorry, we were unable verify the authors address');
         navigate(`/newsletter/${params.newsletterId}`);
       }
@@ -38,6 +36,7 @@ function Payment() {
       setLoading(false);
       setInvoiceGenerated(true);
       setInvoiceDetails(() => invoice);
+      console.log(invoice)
       const start = Date.now();
 
       const interval = setInterval(async () => {
@@ -45,15 +44,29 @@ function Payment() {
           clearInterval(interval);
         }
         const status = await axios.get(`/verifyPayment?verify=${invoice.verify}`);
-        console.log(status)
-        const {settled} = status.data;
+
+        const { settled } = status.data;
         if (settled) {
-          console.log('send email here', details.email)
+          const editionRef = doc(db, 'Newsletters', params.newsletterId, 'editions', params.editionId);
+          updateDoc(editionRef, {
+            paid: arrayUnion(details.email),
+          });
+
+          const mail = await axios.post('/deliver', {
+            email: details.email,
+            newsletter: details.source,
+          });
+          console.log(mail);
+
+          if (mail?.data?.data?.id) {
+            toast.success('Payment received, please check your inbox');
+          } else {
+            toast.error('Error processing your payment. Please contact support');
+          }
+
           clearInterval(interval);
         }
       }, 5000);
-
-      console.log(invoice);
     } catch (err) {
       toast.error('Sorry, we were unable verify the authors address');
       navigate(`/newsletter/${params.newsletterId}`);
@@ -76,7 +89,11 @@ function Payment() {
 
       if (editionSnap.exists()) {
         const edition = editionSnap.data();
-        setDetails((prevDetails) => ({ ...prevDetails, price: edition.price }));
+        setDetails((prevDetails) => ({
+          ...prevDetails,
+          price: edition.price,
+          source: edition.source,
+        }));
       } else {
         toast.error('Sorry, we were unable to find this edition');
         navigate(`/newsletter/${params.newsletterId}`);
@@ -111,7 +128,7 @@ function Payment() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(invoiceDetails.pr);
+    navigator.clipboard.writeText(invoiceDetails.paymentRequest);
     toast.success('Paystring copied!');
   };
 
@@ -123,22 +140,25 @@ function Payment() {
       {!invoiceGenerated
         ? (
           <div>
-            <label>Email: </label>
-            <input
-              type="text"
-              id="email"
-              value={details.email}
-              onChange={onMutate}
-              required
-            />
-            <button type="button" onClick={handlePayment}>
-              Create Invoice
-            </button>
+            <main className="sign-in-main">
+              <label>Email: </label>
+              <input
+                type="text"
+                id="email"
+                value={details.email}
+                onChange={onMutate}
+                required
+              />
+              <button type="button" onClick={handlePayment}>
+                Create Invoice
+              </button>
+            </main>
+
           </div>
         )
         : (
           <div>
-            Invoice made
+            <button type="button" className="gradient-btn" onClick={copyToClipboard}>Copy pay string</button>
           </div>
 
         )}

@@ -39,26 +39,25 @@ function SignUp() {
       formDataCopy.timestamp = serverTimestamp();
 
       await setDoc(doc(db, 'users', userCredential.user.uid), formDataCopy);
-
       navigate('/');
 
       toast.success(`Welcome ${username}`);
     } catch (error) {
-      console.log(error);
       toast.error('Registration error: please use a valid email and more than 8 characters in the password!');
     }
   };
 
   return (
-    <div>
+    <div className="sign-in-container">
       <header>
-        <p>
+        <h3>
           Sign Up
-        </p>
+        </h3>
+        <br />
       </header>
 
-      <main>
-        <form onSubmit={onSubmit}>
+      <main className="sign-in-main">
+        <form className="sign-in-form" onSubmit={onSubmit}>
           <input
             type="text"
             className="nameInput"
@@ -67,7 +66,6 @@ function SignUp() {
             value={username}
             onChange={onChange}
           />
-
           <input
             type="email"
             className="emailInput"
@@ -76,29 +74,18 @@ function SignUp() {
             value={email}
             onChange={onChange}
           />
+          <input
+            type="password"
+            className="passwordInput"
+            placeholder="Password"
+            id="password"
+            value={password}
+            onChange={onChange}
+          />
 
-          <div>
-            <input
-              type="password"
-              className="passwordInput"
-              placeholder="Password"
-              id="password"
-              value={password}
-              onChange={onChange}
-            />
-
-          </div>
-
-          <Link to="/forgot-password">
-            Forgot Password
-          </Link>
-
-          <div>
-            <p>
+          <div id="sign-in-button">
+            <button type="submit">
               Sign Up
-            </p>
-            <button>
-              Icon Here
             </button>
           </div>
         </form>

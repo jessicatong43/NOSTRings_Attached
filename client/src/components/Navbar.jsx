@@ -20,8 +20,8 @@ function Navbar() {
             type="button"
             onClick={() => navigate('/')}
             className={current('/')
-              ? 'Colored'
-              : 'normal'}
+              ? 'current-btn'
+              : 'gradient-btn'}
           >
             Explore
           </button>
@@ -29,8 +29,8 @@ function Navbar() {
             type="button"
             onClick={() => navigate('/dashboard')}
             className={current('/dashboard')
-              ? 'Colored'
-              : 'normal'}
+              ? 'current-btn'
+              : 'gradient-btn'}
           >
             Dashboard
           </button>
@@ -39,8 +39,8 @@ function Navbar() {
           type="button"
           onClick={() => navigate('/profile')}
           className={current('/profile')
-            ? 'Colored'
-            : 'normal'}
+            ? 'current-btn'
+            : 'gradient-btn'}
         >
           Profile
         </button>
