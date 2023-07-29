@@ -2,6 +2,12 @@
   background-color: #000017;
 } */
 
+/* Text margin & padding reset */
+h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
+  margin: 0;
+	padding: 0;
+}
+
 .gradient-text {
   display: inline-block;
   -webkit-background-clip: text;
@@ -57,6 +63,7 @@
   justify-content: center;
 }
 
+/* ========= NAV BAR ========= */
 .nav-bar {
   width: 100vw;
   display: flex;
@@ -94,6 +101,9 @@
   justify-content: center;
 }
 
+
+/* ========= LOADING SPINNER ========= */
+
 .loadingSpinnerContainer {
   display: flex;
   justify-content: center;
@@ -123,6 +133,9 @@
 ul {
   list-style-type: none;
 }
+
+
+/* ========= NEWSLETTER ========= */
 
 .newsletter-overview {
   display: flex;
@@ -156,6 +169,9 @@ ul {
   justify-content: flex-start;
 }
 
+
+/* ========= SEARCHBAR ========= */
+
 #search form {
   margin: 30px;
   display: grid;
@@ -167,25 +183,104 @@ ul {
   border-radius: 11px;
 }
 
+
+/* ========= EXPLORE ========= */
+
 #explore {
   margin: 30px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .newsletter-card {
   width: 150px;
+  height: 150px;
   border: 1px solid;
   border-color: #000;
   border-radius: 20px;
+  margin: 0px 20px 20px 0px;
+  padding: 20px;
+  display: grid;
+  grid-template-rows: 1fr 25px;
+}
+
+.newsletter-card h3, h5 {
+  margin-bottom: 15px;
+}
+
+.newsletter-card small {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+/* ========= PROFILE ========= */
+
+.profile-grid {
+  margin: 30px;
+  display: grid;
+  grid-template-columns: 1fr 200px;
+}
+
+.profile-newsletter-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.yourNewsletters {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.createNewsletter {
+  width: 100px;
+  background: linear-gradient(54deg,#f0f,#0ff);
+  color: #fff;
+  border-radius: 15px;
+  margin-right: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createNewsletter p {
+  text-align: center;
+}
+
+.user-info {
+  border-left: 1px solid dimgray;
+  padding: 20px;
+}
+
+.user-info small {
+  color: dimgray;
+}
+
+/* ========= SIGN IN ========= */
+
+.sign-in-container {
+  padding: 30px;
+  margin: auto;
+  text-align: center;
+}
+
+.sign-in-main {
+  background: linear-gradient(54deg,#f0f,#0ff);
+  width: 400px;
+  margin: auto;
   padding: 30px;
 }
 
-.profile-category {
-  border: 1px solid #000;
-  border-radius: 15px;
-  margin: 20px;
-  padding: 15px;
+.sign-in-form {
+  text-align: center;
 }
 
-#profile h2 {
-  margin: 0px;
+.sign-in-form input {
+  display: block;
+  margin: 10px auto 0px auto;
+  width: 200px;
+}
+
+#sign-in-button {
+  margin: 30px auto 5px auto;
 }
