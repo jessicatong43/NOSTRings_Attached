@@ -74,11 +74,8 @@ function SignIn() {
           </Link>
 
           <div>
-            <p>
+            <button type="submit">
               Sign In
-            </p>
-            <button type="button">
-              Icon Here
             </button>
           </div>
         </form>
