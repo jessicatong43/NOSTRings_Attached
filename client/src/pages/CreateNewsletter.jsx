@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   getAuth, onAuthStateChanged,
 } from 'firebase/auth';
 import {
-  getStorage, ref, uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
-import {
   addDoc, collection, serverTimestamp, getDoc, updateDoc, doc,
 } from 'firebase/firestore';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '../components/Spinner';
@@ -19,7 +15,7 @@ function CreateNewsletter() {
   const auth = getAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    genre: 'What is it about',
+    summary: 'What is it about',
     title: '',
     author: 'Who are you?',
   });
@@ -27,11 +23,10 @@ function CreateNewsletter() {
   const [walletAddr, setWalletAddr] = useState('');
 
   const {
-    title, genre, author,
+    title, summary, author,
   } = formData;
 
   const navigate = useNavigate();
-  const isMounted = useRef(true);
 
   useEffect(() => {
     const checkPayment = async () => {
@@ -58,11 +53,12 @@ function CreateNewsletter() {
     const formDataCopy = {
       ...formData,
       author,
-      genre,
+      summary,
       creator: auth.currentUser.uid,
       created: serverTimestamp(),
       title,
       subscribers: [],
+      genres: [],
     };
 
     const docRef = await addDoc(collection(db, 'Newsletters'), formDataCopy);
@@ -97,7 +93,7 @@ function CreateNewsletter() {
       .then(() => {
         setGetWallet(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error('Sorry, we were unable to add this wallet!');
       });
   };
@@ -123,47 +119,48 @@ function CreateNewsletter() {
   }
 
   return (
-    <div>
-      <header>
-        <p>Create a new Newsletter</p>
+    <div className="sign-in-container">
+      <header className="create-header">
+        <h3>Create a new newsletter</h3>
       </header>
 
       <main>
-        <form onSubmit={handleSubmit}>
-          <label>Title: </label>
-          <input
-            type="text"
-            className="formInputTitle"
-            id="title"
-            value={title}
-            onChange={onMutate}
-            maxLength="60"
-            required
-          />
+        <form className="sign-in-form create center" onSubmit={handleSubmit}>
+          <label>
+            Title:
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={onMutate}
+              maxLength="60"
+              required
+            />
+          </label>
 
-          <label className="formLabel">Genre</label>
-          <input
-            type="string"
-            className="formInputGenre"
-            id="genre"
-            value={genre}
-            onChange={onMutate}
-            required
-          />
+          <label>
+            Summary:
+            <input
+              type="string"
+              id="summary"
+              value={summary}
+              onChange={onMutate}
+              required
+            />
+          </label>
 
-          <label className="formLabel">Author</label>
-          <p className="fileInfo">
-            What would you like to be called?
-          </p>
-          <input
-            className="formInputAuthor"
-            type="text"
-            id="author"
-            onChange={onMutate}
-            value={author}
-            required
-          />
-          <button type="submit">
+          <label>
+            Author:
+            <input
+              type="text"
+              id="author"
+              onChange={onMutate}
+              value={author}
+              required
+            />
+          </label>
+
+          <button type="submit" className="gradient-btn">
             Create Newsletter
           </button>
         </form>

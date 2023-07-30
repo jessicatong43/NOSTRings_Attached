@@ -84,7 +84,7 @@ function SignUp() {
           />
 
           <div id="sign-in-button">
-            <button type="submit">
+            <button type="submit" className="form-btn">
               Sign Up
             </button>
           </div>

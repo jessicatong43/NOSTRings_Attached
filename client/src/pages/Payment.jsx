@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { LightningAddress } from 'alby-tools';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  doc, getDoc, updateDoc, arrayUnion, collection, getDocs, query, orderBy,
+  doc, getDoc, updateDoc, arrayUnion,
 } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import QRCode from 'react-qr-code';
 import { db } from '../firebase.config';
 import Spinner from '../components/Spinner';
 
 function Payment() {
-  const [details, setDetails] = useState({ email: '', address: '', price: 0, source: '' });
+  const [details, setDetails] = useState({
+    email: '', address: '', price: 0, source: '',
+  });
+  const [newsletterTitle, setNewsletterTitle] = useState('');
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
   const [invoiceDetails, setInvoiceDetails] = useState({});
   const params = useParams();
   const navigate = useNavigate();
+  const emailId = useId();
 
   const fetchLn = async () => {
     try {
@@ -36,7 +42,7 @@ function Payment() {
       setLoading(false);
       setInvoiceGenerated(true);
       setInvoiceDetails(() => invoice);
-      console.log(invoice)
+
       const start = Date.now();
 
       const interval = setInterval(async () => {
@@ -56,10 +62,10 @@ function Payment() {
             email: details.email,
             newsletter: details.source,
           });
-          console.log(mail);
 
           if (mail?.data?.data?.id) {
             toast.success('Payment received, please check your inbox');
+            setSuccess(true);
           } else {
             toast.error('Error processing your payment. Please contact support');
           }
@@ -82,6 +88,7 @@ function Payment() {
       let newsletter = {};
       if (docSnap.exists()) {
         newsletter = docSnap.data();
+        setNewsletterTitle(newsletter.title);
       } else {
         toast.error('Sorry, we were unable to find this newsletter');
         navigate(`/newsletter/${params.newsletterId}`);
@@ -135,21 +142,46 @@ function Payment() {
   if (loading) {
     return <Spinner />;
   }
+
+  if (success) {
+    return (
+      <div>
+        <header className="center invoice-header">
+          <h3>Thank yoy for your purchase!</h3>
+        </header>
+        <main>
+          <button type="button" className="gradient-btn" onClick={() => navigate('/')}>
+            Home
+          </button>
+          <button type="button" className="gradient-btn" onClick={() => navigate(`/newsletter/${params.newsletterId}`)}>
+            Back to
+            {' '}
+            {newsletter.title}
+          </button>
+        </main>
+      </div>
+    );
+  }
   return (
     <div>
       {!invoiceGenerated
         ? (
           <div>
-            <main className="sign-in-main">
-              <label className="secondary-text">Email: </label>
-              <input
-                type="text"
-                id="email"
-                value={details.email}
-                onChange={onMutate}
-                required
-              />
-              <button type="button" onClick={handlePayment}>
+            <main className="grid">
+              <p className="invoice-header color-text">Please add an email that you want the newsletter sent to</p>
+              <label className="color-text" htmlFor={emailId}>
+                Email: &nbsp;
+                <input
+                  type="text"
+                  id={emailId}
+                  placeholder="Email address"
+                  value={details.email}
+                  onChange={onMutate}
+                  required
+                />
+              </label>
+
+              <button className="gradient-btn" type="button" onClick={handlePayment}>
                 Create Invoice
               </button>
             </main>
@@ -158,7 +190,19 @@ function Payment() {
         )
         : (
           <div>
-            <button type="button" className="gradient-btn" onClick={copyToClipboard}>Copy pay string</button>
+            <header className="center invoice-header">
+              <h3 className="color-text">Payment invoice has been generated</h3>
+            </header>
+            <main className="grid">
+              <button type="button" className="gradient-btn" onClick={copyToClipboard}>Copy pay string</button>
+              <p className="invoice-header color-text">Or scan here:</p>
+              <QRCode
+                size={256}
+                style={{ height: 'auto', maxWidth: '50vw', width: '50vh' }}
+                value={invoiceDetails.paymentRequest}
+                viewBox="0 0 256 256"
+              />
+            </main>
           </div>
 
         )}

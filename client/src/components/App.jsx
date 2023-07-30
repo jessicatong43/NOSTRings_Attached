@@ -30,15 +30,9 @@ function App() {
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
-          {/* <Route path='/' element={<Explore/>} />
-          <Route path='/profile' element={<PrivateRoute />} >
-            <Route path='/profile' element={<Profile/>} />
-          </Route> */}
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          {/* <Route path='/create-newsletter' element={<CreateListing/>} />
-          <Route path='/edit-edition/:editionId' element={<EditListing/>} /> */}
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>

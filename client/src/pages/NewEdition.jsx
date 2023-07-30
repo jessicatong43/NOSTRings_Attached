@@ -103,7 +103,6 @@ function NewEdition() {
   };
 
   const onMutate = (e) => {
-    // Files
     if (e.target.files) {
       setFormData((prevState) => ({
         ...prevState,
@@ -111,7 +110,6 @@ function NewEdition() {
       }));
     }
 
-    // Text/num
     if (!e.target.files) {
       setFormData((prevState) => ({
         ...prevState,
@@ -147,7 +145,7 @@ function NewEdition() {
             required
           />
 
-          <label className="formLabel">Price in sats</label>
+          <label>Price in sats</label>
           <input
             type="number"
             className="formInputPrice"
@@ -157,7 +155,7 @@ function NewEdition() {
             required
           />
 
-          <label className="formLabel">Source</label>
+          <label >Source</label>
           <p className="fileInfo">
             Please upload a PDF for this edition
           </p>

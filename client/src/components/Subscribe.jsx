@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { db } from '../firebase.config';
 
 function Subscribe({ handleSubscribe }) {
   const [email, setEmail] = useState('');

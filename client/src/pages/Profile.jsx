@@ -6,6 +6,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase.config';
 import ExploreCard from '../components/ExploreCard';
+import Spinner from '../components/Spinner';
 
 function Profile() {
   const auth = getAuth();
@@ -41,7 +42,6 @@ function Profile() {
         data: d.data(),
       }));
 
-      console.log(newslettersArr);
       setNewsletters(newslettersArr);
       setLoading(false);
     };
@@ -55,7 +55,7 @@ function Profile() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   return (

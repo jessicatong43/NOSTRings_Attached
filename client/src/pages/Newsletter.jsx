@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   doc, getDoc, updateDoc, arrayUnion, collection, getDocs, query, orderBy,
 } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { db } from '../firebase.config';
 import EditionList from '../components/EditionList';

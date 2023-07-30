@@ -69,7 +69,7 @@ function SignIn() {
           </Link>
 
           <div id="sign-in-button">
-            <button type="submit">
+            <button type="submit" className="form-btn">
               Sign In
             </button>
           </div>
