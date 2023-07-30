@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { LightningAddress } from 'alby-tools';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -14,12 +14,14 @@ function Payment() {
   const [details, setDetails] = useState({
     email: '', address: '', price: 0, source: '',
   });
+  const [newsletterTitle, setNewsletterTitle] = useState('');
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
   const [invoiceDetails, setInvoiceDetails] = useState({});
   const params = useParams();
   const navigate = useNavigate();
+  const emailId = useId();
 
   const fetchLn = async () => {
     try {
@@ -86,6 +88,7 @@ function Payment() {
       let newsletter = {};
       if (docSnap.exists()) {
         newsletter = docSnap.data();
+        setNewsletterTitle(newsletter.title);
       } else {
         toast.error('Sorry, we were unable to find this newsletter');
         navigate(`/newsletter/${params.newsletterId}`);
@@ -144,8 +147,18 @@ function Payment() {
     return (
       <div>
         <header className="center invoice-header">
-          <h3>This invoice has expired</h3>
+          <h3>Thank yoy for your purchase!</h3>
         </header>
+        <main>
+          <button type="button" className="gradient-btn" onClick={() => navigate('/')}>
+            Home
+          </button>
+          <button type="button" className="gradient-btn" onClick={() => navigate(`/newsletter/${params.newsletterId}`)}>
+            Back to
+            {' '}
+            {newsletter.title}
+          </button>
+        </main>
       </div>
     );
   }
@@ -155,12 +168,12 @@ function Payment() {
         ? (
           <div>
             <main className="grid">
-              <p className="invoice-header">Please add an email that you want the newsletter sent to</p>
-              <label className="secondary-text">
-                Email:
+              <p className="invoice-header color-text">Please add an email that you want the newsletter sent to</p>
+              <label className="color-text" htmlFor={emailId}>
+                Email: &nbsp;
                 <input
                   type="text"
-                  id="email"
+                  id={emailId}
                   placeholder="Email address"
                   value={details.email}
                   onChange={onMutate}
@@ -178,11 +191,11 @@ function Payment() {
         : (
           <div>
             <header className="center invoice-header">
-              <h3>Payment invoice has been generated</h3>
+              <h3 className="color-text">Payment invoice has been generated</h3>
             </header>
             <main className="grid">
               <button type="button" className="gradient-btn" onClick={copyToClipboard}>Copy pay string</button>
-              <p>Or scan here:</p>
+              <p className="invoice-header color-text">Or scan here:</p>
               <QRCode
                 size={256}
                 style={{ height: 'auto', maxWidth: '50vw', width: '50vh' }}

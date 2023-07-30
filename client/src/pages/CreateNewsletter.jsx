@@ -15,7 +15,7 @@ function CreateNewsletter() {
   const auth = getAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    genre: 'What is it about',
+    summary: 'What is it about',
     title: '',
     author: 'Who are you?',
   });
@@ -23,7 +23,7 @@ function CreateNewsletter() {
   const [walletAddr, setWalletAddr] = useState('');
 
   const {
-    title, genre, author,
+    title, summary, author,
   } = formData;
 
   const navigate = useNavigate();
@@ -53,11 +53,12 @@ function CreateNewsletter() {
     const formDataCopy = {
       ...formData,
       author,
-      genre,
+      summary,
       creator: auth.currentUser.uid,
       created: serverTimestamp(),
       title,
       subscribers: [],
+      genres: [],
     };
 
     const docRef = await addDoc(collection(db, 'Newsletters'), formDataCopy);
@@ -138,11 +139,11 @@ function CreateNewsletter() {
           </label>
 
           <label>
-            Genre:
+            Summary:
             <input
               type="string"
-              id="genre"
-              value={genre}
+              id="summary"
+              value={summary}
               onChange={onMutate}
               required
             />

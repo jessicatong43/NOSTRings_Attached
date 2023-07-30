@@ -253,7 +253,7 @@ ul {
 
 .newsletter-card {
   width: 150px;
-  height: 150px;
+  height: 250px;
   border: 2px solid;
   border-color: var(--secondary-text-color);
   border-radius: 20px;
@@ -270,7 +270,7 @@ ul {
 }
 
 .newsletter-card h3, h5 {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .newsletter-card small {
