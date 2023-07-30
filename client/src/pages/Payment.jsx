@@ -12,7 +12,7 @@ import Spinner from '../components/Spinner';
 
 function Payment() {
   const [details, setDetails] = useState({
-    email: '', address: '', price: 0, source: '',
+    email: '', address: '', price: 0, source: '', preview: '',
   });
   const [newsletterTitle, setNewsletterTitle] = useState('');
   const [loading, setLoading] = useState(true);
@@ -58,17 +58,26 @@ function Payment() {
             paid: arrayUnion(details.email),
           });
 
-          const mail = await axios.post('/deliver', {
-            email: details.email,
-            newsletter: details.source,
-          });
+          const data = {
+            service_id: process.env.SERVICE_ID,
+            template_id: process.env.TEMPLATE_ID,
+            user_id: process.env.EMAILJS_PUBLIC_KEY,
+            template_params: {
+              to_email: details.email,
+              url: details.source,
+              newsletter_title: newsletterTitle,
+              preview: details.preview,
+            },
+          };
 
-          if (mail?.data?.data?.id) {
-            toast.success('Payment received, please check your inbox');
-            setSuccess(true);
-          } else {
-            toast.error('Error processing your payment. Please contact support');
-          }
+          axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
+            .then(() => {
+              setSuccess(true);
+              toast.success("Payment successful, you'll receive an email shortly!");
+            })
+            .catch((err) => {
+              toast.success('Sorry, we were unable to send your purchase. Please contact support!');
+            });
 
           clearInterval(interval);
         }
@@ -100,6 +109,7 @@ function Payment() {
           ...prevDetails,
           price: edition.price,
           source: edition.source,
+          preview: edition.preview,
         }));
       } else {
         toast.error('Sorry, we were unable to find this edition');

@@ -2,6 +2,7 @@
 
 ## ToDos
 - format email and setup private email server
+- format new edition form
 - Fix text position and spacing for summary on explore cards
 - Fix form styling for create new newsletter
 - Mobile styling and breakpoints

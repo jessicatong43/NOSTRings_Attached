@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Spinner from '../components/Spinner';
 import { db } from '../firebase.config';
 
-function NewEdition() {
+function NewEdition({ subscribers, newsletterTitle }) {
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: '',
@@ -35,7 +35,6 @@ function NewEdition() {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      console.log(user.uid, creatorId)
       if (user.uid === creatorId) {
         setCreator(true);
       } else {
@@ -74,6 +73,7 @@ function NewEdition() {
           }
         },
         (error) => {
+          toast.error('Please keep files under 2MB');
           reject(error);
         },
         () => {
@@ -99,6 +99,28 @@ function NewEdition() {
     const docRef = await addDoc(collection(db, 'Newsletters', newsletterId, 'editions'), formDataCopy);
     setLoading(false);
     toast.success('You added a new edition!');
+
+    // const data = {
+    //   service_id: process.env.SERVICE_ID,
+    //   template_id: process.env.TEMPLATE_ID,
+    //   user_id: process.env.EMAILJS_PUBLIC_KEY,
+    //   template_params: {
+    //     to_email: details.email,
+    //     url: docUrl,
+    //     newsletter_title: newsletterTitle,
+    //     preview: formData.preview,
+    //   },
+    // };
+
+    // axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
+    //   .then(() => {
+    //     setSuccess(true);
+    //     toast.success("Payment successful, you'll receive an email shortly!");
+    //   })
+    //   .catch((err) => {
+    //     toast.success('Sorry, we were unable to send your purchase. Please contact support!');
+    //   });
+
     navigate(`/newsletter/${newsletterId}`); // Later navigate to /newsletters/${newsletterId}/editionId(docRef.id) to view
   };
 
