@@ -21,7 +21,7 @@ function Navbar() {
             onClick={() => navigate('/')}
             className={current('/')
               ? 'current-btn'
-              : 'gradient-btn'}
+              : ''}
           >
             Explore
           </button>
@@ -30,7 +30,7 @@ function Navbar() {
             onClick={() => navigate('/dashboard')}
             className={current('/dashboard')
               ? 'current-btn'
-              : 'gradient-btn'}
+              : ''}
           >
             Dashboard
           </button>
@@ -40,7 +40,7 @@ function Navbar() {
           onClick={() => navigate('/profile')}
           className={current('/profile')
             ? 'current-btn'
-            : 'gradient-btn'}
+            : ''}
         >
           Profile
         </button>

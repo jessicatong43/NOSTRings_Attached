@@ -94,7 +94,6 @@ function Profile() {
           <button
             type="button"
             onClick={onLogout}
-            className="gradient-btn"
           >
             Logout
           </button>

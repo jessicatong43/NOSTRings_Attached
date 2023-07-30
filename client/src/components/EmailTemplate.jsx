@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function EmailTemplate({ editionId }) {
+function EmailTemplate({ editionId }) {
   return (
     <div>
       <h1>
@@ -9,3 +9,5 @@ export function EmailTemplate({ editionId }) {
     </div>
   );
 }
+
+export default EmailTemplate;

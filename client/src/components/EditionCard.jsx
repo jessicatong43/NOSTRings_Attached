@@ -16,13 +16,13 @@ function EditionCard({ details }) {
         <p>
           Price:
           {` ${details.price} sats`}
-          <button type="button" className="buy-btn gradient-btn" onClick={handleClick}>Buy!</button>
+          <button type="button" className="gradient-btn" onClick={handleClick}>Buy!</button>
         </p>
 
       </div>
 
       <div className="center">
-        <p className="color-text card-body">{details.preview}</p>
+        <p className="card-body">{details.preview}</p>
       </div>
     </div>
   );
