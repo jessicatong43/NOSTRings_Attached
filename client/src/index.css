@@ -38,6 +38,21 @@ body {
   width: 80px;
 }
 
+.form-btn {
+  background: var(--bg-color);
+  border-radius: 0.5rem;
+  border: none;
+  margin: 20px;
+  cursor: pointer;
+  position: relative;
+  padding: 5px;
+  color: var(--main-text-color);
+}
+
+.form-btn:hover {
+  box-shadow: 0px 0px 4px 4px #cecece;
+}
+
 .gradient-btn {
   background: var(--gradient-1);
   border-radius: 0.5rem;
@@ -49,7 +64,7 @@ body {
 }
 
 @media (max-width: 400px) {
-  .gradient-btn {
+  .gradient-btn, .form-btn {
       margin: 10px;
   }
 }
@@ -241,6 +256,12 @@ ul {
   grid-template-rows: 1fr 25px;
 }
 
+.newsletter-card:hover {
+  cursor: pointer;
+  border-color: var(--gradient-1);
+  box-shadow: 0px 0px 4px 4px #cecece;
+}
+
 .newsletter-card h3, h5 {
   margin-bottom: 15px;
 }
@@ -322,4 +343,12 @@ ul {
 
 #sign-in-button {
   margin: 30px auto 5px auto;
+}
+
+.create button {
+  width: 200px;
+}
+
+.create-header {
+  margin: 20px;
 }

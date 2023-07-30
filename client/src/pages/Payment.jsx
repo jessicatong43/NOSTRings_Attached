@@ -6,11 +6,14 @@ import {
 } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import QRCode from 'react-qr-code';
 import { db } from '../firebase.config';
 import Spinner from '../components/Spinner';
 
 function Payment() {
-  const [details, setDetails] = useState({ email: '', address: '', price: 0, source: '' });
+  const [details, setDetails] = useState({
+    email: '', address: '', price: 0, source: '',
+  });
   const [loading, setLoading] = useState(true);
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
   const [invoiceDetails, setInvoiceDetails] = useState({});
@@ -36,7 +39,7 @@ function Payment() {
       setLoading(false);
       setInvoiceGenerated(true);
       setInvoiceDetails(() => invoice);
-      console.log(invoice)
+      console.log(invoice);
       const start = Date.now();
 
       const interval = setInterval(async () => {
@@ -141,10 +144,12 @@ function Payment() {
         ? (
           <div>
             <main className="sign-in-main">
+              <p>Please add an email that you want the newsletter sent to</p>
               <label>Email: </label>
               <input
                 type="text"
                 id="email"
+                placeholder="Email address"
                 value={details.email}
                 onChange={onMutate}
                 required
@@ -158,7 +163,17 @@ function Payment() {
         )
         : (
           <div>
-            <button type="button" className="gradient-btn" onClick={copyToClipboard}>Copy pay string</button>
+            <header>
+              <h3>Payment invoice has been generated</h3>
+            </header>
+            <main className="center">
+              <button type="button" className="gradient-btn" onClick={copyToClipboard}>Copy pay string</button>
+              <QRCode
+                size={256}
+                value={invoiceDetails.paymentRequest}
+                viewBox="0 0 256 256"
+              />
+            </main>
           </div>
 
         )}

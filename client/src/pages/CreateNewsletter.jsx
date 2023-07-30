@@ -31,7 +31,6 @@ function CreateNewsletter() {
   } = formData;
 
   const navigate = useNavigate();
-  const isMounted = useRef(true);
 
   useEffect(() => {
     const checkPayment = async () => {
@@ -123,47 +122,49 @@ function CreateNewsletter() {
   }
 
   return (
-    <div>
-      <header>
-        <p>Create a new Newsletter</p>
+    <div className="sign-in-container">
+      <header className="create-header">
+        <h3>Create a new newsletter</h3>
       </header>
 
       <main>
-        <form onSubmit={handleSubmit}>
-          <label>Title: </label>
-          <input
-            type="text"
-            className="formInputTitle"
-            id="title"
-            value={title}
-            onChange={onMutate}
-            maxLength="60"
-            required
-          />
+        <form className="sign-in-form create center" onSubmit={handleSubmit}>
+          <label>
+            Title:
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={onMutate}
+              maxLength="60"
+              required
+            />
+          </label>
 
-          <label className="formLabel">Genre</label>
-          <input
-            type="string"
-            className="formInputGenre"
-            id="genre"
-            value={genre}
-            onChange={onMutate}
-            required
-          />
+          <label>
+            Genre:
+            <input
+              type="string"
+              id="genre"
+              value={genre}
+              onChange={onMutate}
+              required
+            />
+          </label>
 
-          <label className="formLabel">Author</label>
-          <p className="fileInfo">
-            What would you like to be called?
-          </p>
-          <input
-            className="formInputAuthor"
-            type="text"
-            id="author"
-            onChange={onMutate}
-            value={author}
-            required
-          />
-          <button type="submit">
+          <label>
+            Author:
+            <input
+              className="formInputAuthor"
+              type="text"
+              id="author"
+              onChange={onMutate}
+              value={author}
+              required
+            />
+          </label>
+
+          <button type="submit" className="gradient-btn">
             Create Newsletter
           </button>
         </form>
