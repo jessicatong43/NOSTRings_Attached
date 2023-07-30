@@ -352,3 +352,14 @@ ul {
 .create-header {
   margin: 20px;
 }
+
+.invoice-header {
+  margin: 20px 20px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

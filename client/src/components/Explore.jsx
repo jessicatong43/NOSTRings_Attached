@@ -4,7 +4,7 @@ import ExploreCard from './ExploreCard';
 function Explore({ newsletters }) {
   let content = <section id="explore">Explore</section>;
 
-  if (newsletters.length) {
+  if (newsletters?.length) {
     content = (
       <section id="explore">
         {newsletters.map((newsletter) => (

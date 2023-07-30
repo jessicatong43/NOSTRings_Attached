@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   getAuth, onAuthStateChanged,
 } from 'firebase/auth';
 import {
-  getStorage, ref, uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
-import {
   addDoc, collection, serverTimestamp, getDoc, updateDoc, doc,
 } from 'firebase/firestore';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '../components/Spinner';
@@ -96,7 +92,7 @@ function CreateNewsletter() {
       .then(() => {
         setGetWallet(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error('Sorry, we were unable to add this wallet!');
       });
   };
@@ -155,7 +151,6 @@ function CreateNewsletter() {
           <label>
             Author:
             <input
-              className="formInputAuthor"
               type="text"
               id="author"
               onChange={onMutate}
