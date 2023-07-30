@@ -1,9 +1,11 @@
 :root {
-  --main-text-color: #cab517;
-  --secondary-text-color: #1ab19d;
-  --gradient-1: linear-gradient(54deg,#cab517 9%,#1ab19d 91%);
-  --gradient-1-reverse: linear-gradient(54deg,#1ab19d 9%,#cab517  91%);
-  --bg-color: rgb(33, 20, 1);
+  --main-text-color: #ffffff;
+  --secondary-text-color: #70103A;
+  --yellow: #FFF9C5;
+  --lavender: #DBAFFC;
+  --gradient-1: linear-gradient(120deg,#FFF9C5 9%,#DBAFFC 91%);
+  --gradient-1-reverse: linear-gradient(120deg,#DBAFFC 9%,#FFF9C5  91%);
+  --bg-color: #1e1e1e;
 }
 
 /* Text margin & padding reset */
@@ -33,9 +35,19 @@ body {
   color: transparent;
 }
 
-.buy-btn {
+.secondary-text {
+  color: var(--secondary-text-color);
+}
+
+button {
+  background: var(--lavender);
+  border-radius: 0.5rem;
+  border: none;
   margin: 10px;
-  width: 80px;
+  width: 100px;
+  cursor: pointer;
+  position: relative;
+  padding: 5px;
 }
 
 .form-btn {
@@ -55,12 +67,6 @@ body {
 
 .gradient-btn {
   background: var(--gradient-1);
-  border-radius: 0.5rem;
-  border: none;
-  margin: 20px;
-  cursor: pointer;
-  position: relative;
-  padding: 5px;
 }
 
 @media (max-width: 400px) {
@@ -73,13 +79,14 @@ body {
   content: "";
   position: absolute;
   inset: -.625em;
-  background: var(--gradient-1);
+  background: var(--yellow);
   filter: blur(1.5em);
   z-index: -1;
 }
 
 .current-btn {
-  background: var(--gradient-1);
+  background: var(--yellow);
+  color: var(--secondary-text-color);
   border-radius: 0.5rem;
   border: none;
   margin: 20px;
@@ -102,7 +109,7 @@ body {
   align-items: center;
   justify-content: space-between;
   min-height: 60px;
-  background: rgb(30, 51, 0);
+  background: #70103A;
   padding: 0 30px;
 }
 
@@ -110,7 +117,7 @@ body {
   display: grid;
   border: 1px solid #000;
   background: none;
-  box-shadow: 4px 4px 20px #cecece;
+  box-shadow: 4px 4px 20px #595959;
   border-radius: 1rem;
   padding: 5px 20px;
   margin: 20px 20px;
@@ -151,7 +158,7 @@ body {
 
 .spinner {
   border: 8px solid;
-  border-color: var(--main-text-color) transparent var(--secondary-text-color) transparent;
+  border-color: var(--yellow) transparent var(--lavender) transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   width: 64px;
@@ -189,7 +196,7 @@ ul {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   border: 1px solid #000;
   background: none;
-  box-shadow: 4px 4px 20px #cecece;
+  box-shadow: 4px 4px 20px #595959;
   border-radius: 1rem;
   padding: 5px 20px;
   margin: 20px 20px;
@@ -224,15 +231,15 @@ ul {
 
 #search form {
   margin: 30px;
-  display: grid;
-  grid-template-columns: 1fr 60px;
+  /* display: grid; */
+  /* grid-template-columns: 1fr 100px; */
   max-width: 100vw;
 }
 
 .searchInput {
   border: 1px solid;
   border-radius: 11px;
-  max-width: 60vw;
+  min-width: 60vw;
   padding: 3px 5px;
 }
 
@@ -247,8 +254,8 @@ ul {
 .newsletter-card {
   width: 150px;
   height: 150px;
-  border: 1px solid;
-  border-color: #000;
+  border: 2px solid;
+  border-color: var(--secondary-text-color);
   border-radius: 20px;
   margin: 0px 20px 20px 0px;
   padding: 20px;
@@ -303,6 +310,7 @@ ul {
 
 .createNewsletter p {
   text-align: center;
+  color: var(--secondary-text-color);
 }
 
 .user-info {
