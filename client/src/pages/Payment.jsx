@@ -141,7 +141,7 @@ function Payment() {
         ? (
           <div>
             <main className="sign-in-main">
-              <label>Email: </label>
+              <label className="secondary-text">Email: </label>
               <input
                 type="text"
                 id="email"
