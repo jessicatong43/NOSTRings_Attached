@@ -14,7 +14,7 @@ function Payment() {
   const [details, setDetails] = useState({
     email: '', address: '', price: 0, source: '', preview: '',
   });
-  const [newsletterTitle, setNewsletterTitle] = useState('');
+  const [newsletter, setNewsletter] = useState('');
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
@@ -65,7 +65,7 @@ function Payment() {
             template_params: {
               to_email: details.email,
               url: details.source,
-              newsletter_title: newsletterTitle,
+              newsletter_title: newsletter.title,
               preview: details.preview,
             },
           };
@@ -94,10 +94,10 @@ function Payment() {
       const editionRef = doc(newsletterRef, 'editions', params.editionId);
 
       const [docSnap, editionSnap] = await Promise.all([getDoc(newsletterRef), getDoc(editionRef)]);
-      let newsletter = {};
+      let newsletterBuilder = {};
       if (docSnap.exists()) {
-        newsletter = docSnap.data();
-        setNewsletterTitle(newsletter.title);
+        newsletterBuilder = docSnap.data();
+        setNewsletter(newsletterBuilder);
       } else {
         toast.error('Sorry, we were unable to find this newsletter');
         navigate(`/newsletter/${params.newsletterId}`);
@@ -116,7 +116,7 @@ function Payment() {
         navigate(`/newsletter/${params.newsletterId}`);
       }
 
-      const ownerRef = doc(db, 'users', newsletter.creator);
+      const ownerRef = doc(db, 'users', newsletterBuilder.creator);
       const ownerSnap = await getDoc(ownerRef);
       if (ownerSnap.exists()) {
         const owner = ownerSnap.data();

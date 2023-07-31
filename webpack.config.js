@@ -47,6 +47,7 @@ module.exports = {
         SERVICE_ID: JSON.stringify(process.env.SERVICE_ID),
         TEMPLATE_ID: JSON.stringify(process.env.TEMPLATE_ID),
         EMAILJS_PUBLIC_KEY: JSON.stringify(process.env.EMAILJS_PUBLIC_KEY),
+        PREVIEW_TEMPLATE_ID: JSON.stringify(process.env.PREVIEW_TEMPLATE_ID),
       },
     }),
   ],
