@@ -96,10 +96,11 @@ function Newsletter() {
           <section className="subscribe-email">
             <Subscribe handleSubscribe={handleSubscribe} />
           </section>
+          <hr className="newsletter-info-hr" />
           <section>
             {(auth.currentUser && (newsletter.creator === auth.currentUser.uid))
               ? (
-                <button type="button" className="gradient-btn" onClick={handleNewEdition}>
+                <button type="button" className="gradient-btn new-edition-btn" onClick={handleNewEdition}>
                   Upload a new edition!
                 </button>
               )

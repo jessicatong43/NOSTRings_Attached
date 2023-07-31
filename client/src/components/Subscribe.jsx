@@ -20,17 +20,19 @@ function Subscribe({ handleSubscribe }) {
   return (
     <form onSubmit={(e) => handleSubscribe(e, email)} className="subscribe-form">
       <label htmlFor="email">
-        Email:
+        Email
+        <br />
         <input
           id="email"
           value={email}
           type="email"
           required
           onChange={handleChange}
+          className="subscribe-email-input"
         />
       </label>
 
-      <button type="submit" className="gradient-btn">
+      <button type="submit" className="gradient-btn subscribe-btn">
         Subscribe
       </button>
     </form>
