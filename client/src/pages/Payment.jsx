@@ -168,7 +168,7 @@ function Payment() {
         ? (
           <div>
             <main className="grid">
-              <p className="invoice-header color-text">Please add an email that you want the newsletter sent to</p>
+              <p className="invoice-header">Please add an email that you want the newsletter sent to</p>
               <label className="color-text" htmlFor={emailId}>
                 Email: &nbsp;
                 <input
