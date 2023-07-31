@@ -157,7 +157,7 @@ function Payment() {
     return (
       <div>
         <header className="center invoice-header">
-          <h3>Thank yoy for your purchase!</h3>
+          <h3>Thank you for your purchase!</h3>
         </header>
         <main>
           <button type="button" className="gradient-btn" onClick={() => navigate('/')}>
@@ -178,10 +178,10 @@ function Payment() {
         ? (
           <div>
             <main className="grid">
-              <p className="invoice-header color-text">Please add an email that you want the newsletter sent to</p>
+              <p className="invoice-header">Please add an email that you want the newsletter sent to</p>
               <label className="color-text" htmlFor={emailId}>
-                Email: &nbsp;
                 <input
+                  className="invoice-email-input"
                   type="text"
                   id={emailId}
                   placeholder="Email address"
