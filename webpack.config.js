@@ -44,6 +44,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         RESEND_API_KEY: JSON.stringify(process.env.RESEND_API_KEY),
+        SERVICE_ID: JSON.stringify(process.env.SERVICE_ID),
+        TEMPLATE_ID: JSON.stringify(process.env.TEMPLATE_ID),
+        EMAILJS_PUBLIC_KEY: JSON.stringify(process.env.EMAILJS_PUBLIC_KEY),
+        PREVIEW_TEMPLATE_ID: JSON.stringify(process.env.PREVIEW_TEMPLATE_ID),
       },
     }),
   ],

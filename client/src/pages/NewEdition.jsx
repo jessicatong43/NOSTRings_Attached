@@ -4,10 +4,13 @@ import {
   getStorage, ref, uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import {
+  addDoc, collection, serverTimestamp, doc, getDoc,
+} from 'firebase/firestore';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import Spinner from '../components/Spinner';
 import { db } from '../firebase.config';
 
@@ -35,7 +38,6 @@ function NewEdition() {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      console.log(user.uid, creatorId)
       if (user.uid === creatorId) {
         setCreator(true);
       } else {
@@ -74,6 +76,7 @@ function NewEdition() {
           }
         },
         (error) => {
+          toast.error('Please keep files under 2MB');
           reject(error);
         },
         () => {
@@ -99,6 +102,37 @@ function NewEdition() {
     const docRef = await addDoc(collection(db, 'Newsletters', newsletterId, 'editions'), formDataCopy);
     setLoading(false);
     toast.success('You added a new edition!');
+
+    const data = {
+      service_id: process.env.SERVICE_ID,
+      template_id: process.env.PREVIEW_TEMPLATE_ID,
+      user_id: process.env.EMAILJS_PUBLIC_KEY,
+      template_params: {},
+    };
+
+    const newsletterRef = doc(db, 'Newsletters', newsletterId);
+    const newsletterSnap = await getDoc(newsletterRef);
+    if (newsletterSnap.exists()) {
+      const newsletterData = newsletterSnap.data();
+      data.template_params.newsletter_title = newsletterData.title;
+      data.template_params.edition_preview = formDataCopy.preview;
+      data.template_params.edition_title = formDataCopy.title;
+      data.template_params.newsletter_author = newsletterData.author;
+      newsletterData.subscribers.forEach((email) => {
+        data.template_params.to_email = email;
+        axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
+          .then(() => {
+            console.log('success');
+          })
+          .catch((err) => {
+            toast.success(`Sorry, we were unable to send your preview to ${email}`);
+          });
+      });
+    } else {
+      navigate('/');
+      toast.error('Sorry, we could not find this newsletter');
+    }
+
     navigate(`/newsletter/${newsletterId}`); // Later navigate to /newsletters/${newsletterId}/editionId(docRef.id) to view
   };
 
@@ -155,7 +189,7 @@ function NewEdition() {
             required
           />
 
-          <label >Source</label>
+          <label>Source</label>
           <p className="fileInfo">
             Please upload a PDF for this edition
           </p>
