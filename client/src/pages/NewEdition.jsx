@@ -11,12 +11,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import Spinner from '../components/Spinner';
-import { db } from '../firebase.config';
 import { getDocument } from 'pdfjs-dist';
 import * as pdfjsLib from 'pdfjs-dist/webpack';
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "../../build/webpack/pdf.worker.bundle.js";
+import Spinner from '../components/Spinner';
+import { db } from '../firebase.config';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = '../../build/webpack/pdf.worker.bundle.js';
 
 function NewEdition() {
   const [loading, setLoading] = useState(true);
@@ -164,16 +164,63 @@ function NewEdition() {
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
         const page = await pdf.getPage(pageNumber);
         const pageText = await page.getTextContent();
-        text += pageText.items.map(item => item.str).join(' ');
+        text += pageText.items.map((item) => item.str).join(' ');
       }
-      console.log(text)
-      const generatedPreview = await axios.post('/summary', { text });
-      //const previewText = generatedPreview.data;
-      setFormData((prevDetails) => ({ ...prevDetails, preview: generatedPreview.data }))
+      text = text.substring(0, 2000);
 
+      const options = {
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'system',
+            content: 'You run marketing for a digital newsletter.',
+          },
+          {
+            role: 'user',
+            content: `Given the latest edition below write a short and catchy summary to entice readers to buy the newsletter without giving too much away: \n ${text}`,
+          },
+        ],
+      };
+
+      try {
+        await axios.post('https://matador-ai.replit.app/v1/chat/completions', options);
+      } catch (error) {
+        if (error.response && error.response.status === 402) {
+          const payRequest = error.response.headers['www-authenticate'].split('=')[2];
+          const tokenStartIndex = error.response.headers['www-authenticate'].indexOf('token=') + 6;
+          const tokenEndIndex = error.response.headers['www-authenticate'].indexOf(',', tokenStartIndex);
+          const token = error.response.headers['www-authenticate'].substring(tokenStartIndex, tokenEndIndex);
+          try {
+            await window.webln.enable();
+            const response = await window.webln.sendPayment(payRequest);
+
+            if (response.preimage) {
+              const finalResponse = await axios.post(
+                'https://matador-ai.replit.app/v1/chat/completions',
+                options,
+                {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `L402 ${token}:${response.preimage}`,
+                  },
+                },
+              );
+              setFormData((prevDetails) => ({
+                ...prevDetails,
+                preview: finalResponse.data.choices[0].message.content
+              }));
+            }
+          } catch {
+            toast.error('Please install a browser extension to pay, try Alby!');
+          }
+        }
+      }
+
+      // const generatedPreview = await axios.post('/summary', { text });
+      // // const previewText = generatedPreview.data;
+      // setFormData((prevDetails) => ({ ...prevDetails, preview: generatedPreview.data }));
     } catch (error) {
-      console.error('Error converting PDF to text:', error);
-      throw error;
+      toast.error('Sorry, we were unable to read your document');
     }
   };
 
@@ -235,7 +282,7 @@ function NewEdition() {
 
             <label htmlFor="preview">
               Short preview
-              <br/>
+              <br />
               <textarea
                 type="text"
                 id="preview"
@@ -243,10 +290,10 @@ function NewEdition() {
                 onChange={onMutate}
                 required
               />
-              <br/>
+              <br />
               Or
-              <br/>
-              <button className="current-btn" type="button" onClick={generatePreview}>
+              <br />
+              <button type="button" onClick={generatePreview}>
                 Generate preview
               </button>
             </label>

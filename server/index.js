@@ -2,7 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const compression = require('compression');
 const axios = require('axios');
-const { Configuration, OpenAIApi } = require("openai");
+const { Configuration, OpenAIApi } = require('openai');
 
 const express = require('express');
 const morgan = require('morgan');
@@ -48,15 +48,30 @@ app.post('/summary', async (req, res) => {
   try {
     let { text } = req.body;
     text = text.substring(0, 2000);
-    console.log(text.length)
-    const generation = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{role: 'system', content: 'You run marketing for a digital newsletter.' }, {role: 'user', content: `Given the latest edition below write a short and catchy summary to entice readers to buy the newsletter without giving too much away: \n ${text}`}],
-      temperature: 0.6,
-      max_tokens: 3500,
-    });
 
-    console.log(generation.data.choices)
+    // const generation = await openai.createChatCompletion({
+    //   model: "gpt-3.5-turbo",
+    //   messages: [{role: 'system', content: 'You run marketing for a digital newsletter.' }, {role: 'user', content: `Given the latest edition below write a short and catchy summary to entice readers to buy the newsletter without giving too much away: \n ${text}`}],
+    //   temperature: 0.6,
+    //   max_tokens: 3500,
+    // });
+
+    const options = {
+      model: 'gpt-4',
+      messages: [
+        {
+          role: 'system',
+          content: 'You run marketing for a digital newsletter.',
+        },
+        {
+          role: 'user',
+          content: `Given the latest edition below write a short and catchy summary to entice readers to buy the newsletter without giving too much away: \n ${text}`,
+        },
+      ],
+    };
+
+    const metador = await axios.post('https://matador-ai.replit.app/v1/chat/completions', options);
+    console.log(metador)
 
     res.status(200).json(generation.data.choices[0].message.content);
   } catch (error) {
