@@ -9,7 +9,7 @@ function Search({ handleSearch }) {
   };
 
   return (
-    <section id="search">
+    <section className="search">
       <form type="submit" onSubmit={handleSubmit} htmlFor={searchId}>
         <input id={searchId} name="searchString" type="search" placeholder="Search" className="search-input" />
         <button type="submit" className="search-btn">Search</button>

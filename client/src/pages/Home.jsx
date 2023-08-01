@@ -43,7 +43,7 @@ function Home() {
   };
 
   return (
-    <div>
+    <div className="container">
       <Search handleSearch={handleSearch} />
       <Explore newsletters={newsletters} />
     </div>
