@@ -10,4 +10,4 @@
 - Mobile styling and breakpoints
 - Private nostr relay to post newsletters and so subscribers can see only ones the bought
 - Style edition cards in newsletter page, fix mobile sizing too
-- Add a dashboard page
+- Add a dashboard page# NOSTRings_Attached
