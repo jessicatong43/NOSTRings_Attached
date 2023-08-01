@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function ExploreCard({ newsletter, newsletterId }) {
   const navigate = useNavigate();
 
+
   const handleClick = () => {
     navigate(`/newsletter/${newsletterId}`);
   };
@@ -22,7 +23,7 @@ function ExploreCard({ newsletter, newsletterId }) {
         <p id="newsletter-details">{newsletter.summary}</p>
       </div>
       <small>
-        {newsletter.subscribers.length}
+        {newsletter.subscribers?.length}
         {' '}
         subscribers
       </small>

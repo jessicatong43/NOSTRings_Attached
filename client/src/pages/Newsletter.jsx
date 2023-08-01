@@ -26,7 +26,7 @@ function Newsletter() {
 
     const editionsRef = collection(db, `Newsletters/${params.newsletterId}/editions`);
 
-    const q = query(editionsRef, orderBy('created'));
+    const q = query(editionsRef, orderBy('created', 'desc'));
 
     const [editionsSnap, docSnap] = await Promise.all([getDocs(q), getDoc(docRef)]);
     const arr = [];

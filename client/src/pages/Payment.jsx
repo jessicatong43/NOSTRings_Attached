@@ -24,6 +24,10 @@ function Payment() {
   const emailId = useId();
 
   const sendEmail = () => {
+    const editionRef = doc(db, 'Newsletters', params.newsletterId, 'editions', params.editionId);
+    updateDoc(editionRef, {
+      paid: arrayUnion(details.email),
+    });
     const data = {
       service_id: process.env.SERVICE_ID,
       template_id: process.env.TEMPLATE_ID,
@@ -84,10 +88,6 @@ function Payment() {
 
           const { settled } = status.data;
           if (settled) {
-            const editionRef = doc(db, 'Newsletters', params.newsletterId, 'editions', params.editionId);
-            updateDoc(editionRef, {
-              paid: arrayUnion(details.email),
-            });
             sendEmail();
 
             // const data = {
