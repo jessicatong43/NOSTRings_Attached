@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   collection, getDocs, query, orderBy, limit, where, collectionGroup,
 } from 'firebase/firestore';
@@ -6,6 +7,7 @@ import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.config';
 import Search from '../components/Search';
 import DashboardRow from '../components/DashboardRow';
+import Spinner from '../components/Spinner';
 
 function Dashboard() {
   const [newsletters, setNewsletters] = useState([]);
@@ -14,8 +16,8 @@ function Dashboard() {
   const [allEditions, setAllEditions] = useState([]);
   const [ownedNewsletters, setOwnedNewsletters] = useState([]);
   const [allOwnedNewsletters, setAllOwnedNewsletters] = useState([]);
+  const [loading, setLoading] = useState(true);
   const auth = getAuth();
-  console.log(ownedNewsletters, newsletters, editions);
 
   const fetchNewsletters = async () => {
     const newslettersRef = collection(db, 'Newsletters');
@@ -81,9 +83,8 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    fetchNewsletters();
-    fetchEditions();
-    fetchOwnedNewsletters();
+    Promise.all([fetchNewsletters(), fetchEditions(), fetchOwnedNewsletters()])
+      .then((results) => setLoading(false))
   }, []);
 
   const handleSearch = (searchStr) => {
@@ -103,13 +104,31 @@ function Dashboard() {
     setOwnedNewsletters(filteredOwned);
   };
 
+  if (loading) {
+    return <Spinner/>
+  }
+
   return (
-    <div>
+    <div className="grid">
       <Search handleSearch={handleSearch} />
-      {/* <UserNewsletters data={ownedNewsletters} /> */}
       {ownedNewsletters.length > 0
-        ? <DashboardRow title="Newsletters you author" data={ownedNewsletters} type="newsletter" />
-        : <div>Owned...</div>}
+        ? (
+          <div className="grid">
+            <Link to="/create-newsletter" className="createNewsletter">
+              <p>+ Create a newsletter</p>
+            </Link>
+            <br />
+            <DashboardRow title="Newsletters you author" data={ownedNewsletters} type="newsletter" />
+          </div>
+        )
+        : (
+          <div className="center">
+            <Link to="/create-newsletter" className="createNewsletter">
+              <p>+ Create a newsletter</p>
+            </Link>
+            <br />
+          </div>
+        )}
 
       <DashboardRow title="Editions you've bought" data={editions} type="edition" />
       <DashboardRow title="Newsletters you subscribe to" data={newsletters} type="newsletter" />

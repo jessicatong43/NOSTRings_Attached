@@ -150,6 +150,12 @@ button {
   margin: 20px 20px;
 }
 
+.grid {
+  margin: 20px;
+  max-width: 100vw;
+  height: auto;
+}
+
 /* ========= NAV BAR ========= */
 .nav-bar {
   max-width: 100vw;

@@ -65,9 +65,6 @@ function Profile() {
         <section>
           <div className="profile-newsletter-header">
             <h3>Your Newsletters</h3>
-            <Link to="/create-newsletter" className="createNewsletter">
-              <p>+ Create</p>
-            </Link>
           </div>
           <div>
             {!loading && newsletters?.length > 0 ? (
@@ -90,6 +87,10 @@ function Profile() {
           <br />
           <small>Email</small>
           <p>{auth.currentUser.email || null}</p>
+          <br />
+          <Link to="/create-newsletter" className="createNewsletter">
+            <p>+ Create</p>
+          </Link>
           <br />
           <button
             type="button"
