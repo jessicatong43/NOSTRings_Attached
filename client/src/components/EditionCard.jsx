@@ -13,16 +13,16 @@ function EditionCard({ details }) {
 
       <div className="edition-details">
         <h4 className="color-text card-title">{details.title}</h4>
+        <p className="card-body">{details.preview}</p>
+      </div>
+
+      <div className="price">
         <p>
           Price:
           {` ${details.price} sats`}
-          <button type="button" className="gradient-btn" onClick={handleClick}>Buy!</button>
+          <br />
+          <button type="button" className="gradient-btn buy-btn" onClick={handleClick}>Buy!</button>
         </p>
-
-      </div>
-
-      <div className="center">
-        <p className="card-body">{details.preview}</p>
       </div>
     </div>
   );

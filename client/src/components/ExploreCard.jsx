@@ -11,12 +11,12 @@ function ExploreCard({ newsletter, newsletterId }) {
 
   return (
     <article className="newsletter-card" onClick={handleClick}>
-      <div className="color-text">
-        <h3>{newsletter.title}</h3>
-        <h5>
+      <div>
+        <h3 className="color-text newsletter-title">{newsletter.title}</h3>
+        <h5 className="newsletter-author">
           By
           {' '}
-          {newsletter.author}
+          {newsletter.author || newsletter.Author}
         </h5>
       </div>
       <div>
