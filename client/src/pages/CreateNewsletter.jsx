@@ -119,7 +119,7 @@ function CreateNewsletter() {
   }
 
   return (
-    <div className="form-container">
+    <div className="form-container container">
       <div className="form-card">
         <header className="create-header">
           <h3 className="color-text">Create a new newsletter</h3>

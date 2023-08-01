@@ -83,7 +83,26 @@ function Newsletter() {
   }
 
   return (
-    <div className="newsletter-page">
+    <div className="newsletter-page container">
+      <section className="newsletter-info">
+        <div className="newsletter-description">
+          <h2 className="color-text newsletter-title">{newsletter.title}</h2>
+          <p className="newsletter-author">
+            By:&nbsp;
+            {newsletter.author}
+          </p>
+          <p className="newsletter-summary">{newsletter.summary}</p>
+        </div>
+        <div className="subscribe-email">
+          {(auth.currentUser && (newsletter.creator === auth.currentUser.uid))
+            ? (
+              <button type="button" className="gradient-btn new-edition-btn" onClick={handleNewEdition}>
+                Upload a new edition!
+              </button>
+            )
+            : <Subscribe handleSubscribe={handleSubscribe} />}
+        </div>
+      </section>
       <Search handleSearch={handleSearch} />
       <div className="newsletter-overview">
         <div className="newsletter-editions">
@@ -92,29 +111,7 @@ function Newsletter() {
             : <div>No editions found</div>}
 
         </div>
-        <div className="newsletter-info">
-          <section className="subscribe-email">
-            {(auth.currentUser && (newsletter.creator === auth.currentUser.uid))
-              ? (
-                <button type="button" className="gradient-btn new-edition-btn" onClick={handleNewEdition}>
-                  Upload a new edition!
-                </button>
-              )
-              : <Subscribe handleSubscribe={handleSubscribe} />}
-          </section>
-          <hr className="newsletter-info-hr" />
-          <section className="grid">
-            <h2 className="color-text">{newsletter.title}</h2>
-            <br/>
-            <h6>
-              By:&nbsp;
-              {newsletter.author}
-            </h6>
-            <br/>
-            <br/>
-            <h5>{newsletter.summary}</h5>
-          </section>
-        </div>
+
       </div>
     </div>
   );

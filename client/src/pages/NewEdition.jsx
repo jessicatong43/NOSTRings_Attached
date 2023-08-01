@@ -233,7 +233,7 @@ function NewEdition() {
   }
 
   return (
-    <div className="form-container">
+    <div className="form-container container">
       <div className="form-card center">
         <header className="create-header">
           <h3 className="color-text">Upload a new edition</h3>

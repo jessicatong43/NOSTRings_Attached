@@ -59,7 +59,7 @@ function Profile() {
   }
 
   return (
-    <div className="profile">
+    <div className="profile container">
 
       <main className="profile-grid">
         <section>
