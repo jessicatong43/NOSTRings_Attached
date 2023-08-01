@@ -15,6 +15,16 @@ h1, h2, h3, h4, h5, h6, p, small, dl, dt, dd, ol, ul, li {
 	padding: 0;
 }
 
+input,
+textarea {
+  box-shadow: rgba(0, 0, 0, 0.11);
+  border: var(--secondary-text-color);
+  background: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  outline: none;
+}
+
 body {
   margin: 0;
   background-color: var(--bg-color);
@@ -106,6 +116,26 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.form-card label {
+  margin-top: 10px;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-card {
+  flex-direction: column;
+  border: 2px solid var(--secondary-text-color);
+  background: none;
+  box-shadow: 4px 4px 20px #595959;
+  border-radius: 1rem;
+  padding: 20px;
+  margin: 20px 20px;
 }
 
 /* ========= NAV BAR ========= */
@@ -202,12 +232,6 @@ ul {
   min-width: calc(60vw + 40px);
   margin: 20px 20px;
 }
-
-/* .edition-details {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-} */
 
 .price {
   text-align: center;
@@ -383,6 +407,8 @@ margin: 5px 0 15px 0;
   width: 400px;
   margin: auto;
   padding: 30px;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 20px #595959;
 }
 
 .sign-in-form {

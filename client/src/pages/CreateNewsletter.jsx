@@ -119,53 +119,57 @@ function CreateNewsletter() {
   }
 
   return (
-    <div className="sign-in-container">
-      <header className="create-header">
-        <h3>Create a new newsletter</h3>
-      </header>
+    <div className="form-container">
+      <div className="form-card">
+        <header className="create-header">
+          <h3 className="color-text">Create a new newsletter</h3>
+        </header>
 
-      <main>
-        <form className="sign-in-form create center" onSubmit={handleSubmit}>
-          <label>
-            Title:
-            <input
-              type="text"
-              id="title"
-              value={title}
-              onChange={onMutate}
-              maxLength="60"
-              required
-            />
-          </label>
+        <main>
+          <form className="sign-in-form create center" onSubmit={handleSubmit}>
+            <label htmlFor="title">
+              Title
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={onMutate}
+                maxLength="60"
+                required
+              />
+            </label>
 
-          <label>
-            Summary:
-            <input
-              type="string"
-              id="summary"
-              value={summary}
-              onChange={onMutate}
-              required
-            />
-          </label>
+            <label htmlFor="summary">
+              Summary
+              <br/>
+              <textarea
+                type="string"
+                id="summary"
+                value={summary}
+                onChange={onMutate}
+                required
+              />
+            </label>
 
-          <label>
-            Author:
-            <input
-              type="text"
-              id="author"
-              onChange={onMutate}
-              value={author}
-              required
-            />
-          </label>
+            <label htmlFor="author">
+              Author
+              <input
+                type="text"
+                id="author"
+                onChange={onMutate}
+                value={author}
+                required
+              />
+            </label>
 
-          <button type="submit" className="gradient-btn">
-            Create Newsletter
-          </button>
-        </form>
-      </main>
+            <button type="submit" className="gradient-btn">
+              Create Newsletter
+            </button>
+          </form>
+        </main>
+      </div>
     </div>
+
   );
 }
 
