@@ -84,7 +84,7 @@ function Dashboard() {
 
   useEffect(() => {
     Promise.all([fetchNewsletters(), fetchEditions(), fetchOwnedNewsletters()])
-      .then((results) => setLoading(false))
+      .then((results) => setLoading(false));
   }, []);
 
   const handleSearch = (searchStr) => {
@@ -105,30 +105,13 @@ function Dashboard() {
   };
 
   if (loading) {
-    return <Spinner/>
+    return <Spinner />;
   }
 
   return (
     <div className="grid">
       <Search handleSearch={handleSearch} />
-      {ownedNewsletters.length > 0
-        ? (
-          <div className="grid">
-            <Link to="/create-newsletter" className="createNewsletter">
-              <p>+ Create a newsletter</p>
-            </Link>
-            <br />
-            <DashboardRow title="Newsletters you author" data={ownedNewsletters} type="newsletter" />
-          </div>
-        )
-        : (
-          <div className="center">
-            <Link to="/create-newsletter" className="createNewsletter">
-              <p>+ Create a newsletter</p>
-            </Link>
-            <br />
-          </div>
-        )}
+      <DashboardRow title="Newsletters you author" data={ownedNewsletters} type="owned-newsletters" />
 
       <DashboardRow title="Editions you've bought" data={editions} type="edition" />
       <DashboardRow title="Newsletters you subscribe to" data={newsletters} type="newsletter" />

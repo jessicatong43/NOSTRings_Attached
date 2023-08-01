@@ -108,7 +108,7 @@ function Newsletter() {
         <div className="newsletter-editions">
           {displayedEditions?.length > 0
             ? <EditionList editions={displayedEditions} />
-            : <div>No editions found</div>}
+            : <div className="color-text">No editions found</div>}
 
         </div>
 

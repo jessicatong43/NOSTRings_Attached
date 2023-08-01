@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
@@ -5,7 +6,13 @@ import EditionCard from './EditionCard';
 import ExploreCard from './ExploreCard';
 
 function DashboardRow({ data, title, type }) {
-  const perRow = data.length > 4 ? data.length : 4;
+  let perRow;
+  if (type === 'owned-newsletters') {
+    perRow = (data.length + 1) < 2 ? 1 : 2;
+  } else {
+    perRow = data.length < 2 ? 1 : 2;
+  }
+
   const settings = {
     dots: true,
     infinite: false,
@@ -13,45 +20,51 @@ function DashboardRow({ data, title, type }) {
     slidesToShow: perRow,
     slidesToScroll: perRow,
     initialSlide: 0,
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: perRow - 1 || 1,
-    //       slidesToScroll: perRow - 1 || 1,
-    //       infinite: true,
-    //       dots: true,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 600,
-    //     settings: {
-    //       slidesToShow: perRow - 2 || 1,
-    //       slidesToScroll: perRow - 2 || 1,
-    //       initialSlide: 1,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 480,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1,
-    //     },
-    //   },
-    // ],
+    responsive: [
+      // {
+      //   breakpoint: 1024,
+      //   settings: {
+      //     slidesToShow: perRow < 3 ? perRow : 3,
+      //     slidesToScroll: perRow < 3 ? perRow : 3,
+      //     infinite: true,
+      //     dots: true,
+      //   },
+      // },
+      // {
+      //   breakpoint: 850,
+      //   settings: {
+      //     slidesToShow: perRow < 2 ? perRow : 2,
+      //     slidesToScroll: perRow < 2 ? perRow : 2,
+      //     initialSlide: 1,
+      //   },
+      // },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   if (data?.length === 0) {
     return (
-      <div className="text-card">
-        <div className="edition-details">
-          <h4 className="color-text card-title">
-            There's nothing here,
-            {' '}
-            <Link to="/explore">Explore!</Link>
-          </h4>
+      <>
+        &nbsp;
+        {' '}
+        <h3 className="color-text">{title}</h3>
+        <div className="text-card">
+          <div className="edition-details">
+            <h4 className="color-text card-title">
+              There's nothing here,
+              {' '}
+              <Link to="/">Explore!</Link>
+            </h4>
+          </div>
         </div>
-      </div>
+      </>
+
     );
   }
 
@@ -59,26 +72,43 @@ function DashboardRow({ data, title, type }) {
     <div>
       {type === 'edition' ? (
         <div>
-          &nbsp;
-          {' '}
-          <h4 className="color-text">{title}</h4>
-          <Slider {...settings}>
+          <h3 className="color-text">{title}</h3>
+          <Slider {...settings} className="slider">
             {data.map((edition) => (
-              <EditionCard details={edition} key={edition.title} paid />
+              <div key={edition.title}>
+                <EditionCard details={edition} paid />
+              </div>
+
             ))}
           </Slider>
         </div>
-      ) : (
+      ) : (type === 'owned-newsletters' ? (
         <div>
-          &nbsp;
-          {' '}
-          <h4 className="color-text">{title}</h4>
-          <Slider {...settings}>
+          <h3 className="color-text">{title}</h3>
+
+          <Slider {...settings} className="slider">
+            <div>
+              <Link to="/create-newsletter" className="createNewsletter create-btn">
+                <p>+ Create</p>
+              </Link>
+            </div>
+
             {data.map((edition) => (
               <ExploreCard newsletter={edition} newsletterId={edition.id} key={edition.title} />
             ))}
           </Slider>
         </div>
+      )
+        : (
+          <div>
+            <h3 className="color-text">{title}</h3>
+            <Slider {...settings} className="slider">
+              {data.map((edition) => (
+                <ExploreCard newsletter={edition} newsletterId={edition.id} key={edition.title} />
+              ))}
+            </Slider>
+          </div>
+        )
       )}
     </div>
 
