@@ -50,7 +50,7 @@ function SignUp() {
   return (
     <div className="sign-in-container">
       <header>
-        <h3>
+        <h3 className="color-text">
           Sign Up
         </h3>
         <br />
@@ -60,7 +60,6 @@ function SignUp() {
         <form className="sign-in-form" onSubmit={onSubmit}>
           <input
             type="text"
-            className="nameInput"
             placeholder="Username"
             id="username"
             value={username}
@@ -68,7 +67,6 @@ function SignUp() {
           />
           <input
             type="email"
-            className="emailInput"
             placeholder="Email"
             id="email"
             value={email}
@@ -76,7 +74,6 @@ function SignUp() {
           />
           <input
             type="password"
-            className="passwordInput"
             placeholder="Password"
             id="password"
             value={password}

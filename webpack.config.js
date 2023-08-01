@@ -48,6 +48,7 @@ module.exports = {
         TEMPLATE_ID: JSON.stringify(process.env.TEMPLATE_ID),
         EMAILJS_PUBLIC_KEY: JSON.stringify(process.env.EMAILJS_PUBLIC_KEY),
         PREVIEW_TEMPLATE_ID: JSON.stringify(process.env.PREVIEW_TEMPLATE_ID),
+        // OPEN_AI_APIKEY: JSON.stringify(process.env.OPEN_AI_APIKEY),
       },
     }),
   ],

@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function ExploreCard({ newsletter, newsletterId }) {
-  console.log(newsletter);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,7 +15,7 @@ function ExploreCard({ newsletter, newsletterId }) {
         <h5 className="newsletter-author">
           By
           {' '}
-          {newsletter.author || newsletter.Author}
+          {newsletter.author}
         </h5>
       </div>
       <div>

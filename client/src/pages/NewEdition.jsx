@@ -13,6 +13,10 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import { db } from '../firebase.config';
+import { getDocument } from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist/webpack';
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "../../build/webpack/pdf.worker.bundle.js";
 
 function NewEdition() {
   const [loading, setLoading] = useState(true);
@@ -27,7 +31,7 @@ function NewEdition() {
   const [creator, setCreator] = useState(false);
 
   const {
-    title, price, file,
+    title, price, file, preview,
   } = formData;
 
   const navigate = useNavigate();
@@ -49,7 +53,6 @@ function NewEdition() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     const storeDocument = async (pdfFile) => new Promise((resolve, reject) => {
@@ -93,7 +96,6 @@ function NewEdition() {
       ...formData,
       source: docUrl,
       newsletter: newsletterId,
-      preview: 'Sample preview for now',
       created: serverTimestamp(),
     };
 
@@ -118,15 +120,16 @@ function NewEdition() {
       data.template_params.edition_preview = formDataCopy.preview;
       data.template_params.edition_title = formDataCopy.title;
       data.template_params.newsletter_author = newsletterData.author;
-      newsletterData.subscribers.forEach((email) => {
+      data.template_params.price = formDataCopy.price;
+      data.template_params.payment_link = `http://localhost:3000/payment/${newsletterId}/${docRef.id}`;
+
+      newsletterData.subscribers.forEach(async (email) => {
         data.template_params.to_email = email;
-        axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
-          .then(() => {
-            console.log('success');
-          })
-          .catch((err) => {
-            toast.success(`Sorry, we were unable to send your preview to ${email}`);
-          });
+        try {
+          await axios.post('https://api.emailjs.com/api/v1.0/email/send', data);
+        } catch {
+          toast.success(`Sorry, we were unable to send your preview to ${email}`);
+        }
       });
     } else {
       navigate('/');
@@ -152,60 +155,109 @@ function NewEdition() {
     }
   };
 
+  const generatePreview = async () => {
+    try {
+      const pdfData = new Uint8Array(await file[0].arrayBuffer());
+      const pdf = await getDocument(pdfData).promise;
+      let text = '';
+
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+        const page = await pdf.getPage(pageNumber);
+        const pageText = await page.getTextContent();
+        text += pageText.items.map(item => item.str).join(' ');
+      }
+      console.log(text)
+      const generatedPreview = await axios.post('/summary', { text });
+      //const previewText = generatedPreview.data;
+      setFormData((prevDetails) => ({ ...prevDetails, preview: generatedPreview.data }))
+
+    } catch (error) {
+      console.error('Error converting PDF to text:', error);
+      throw error;
+    }
+  };
+
   if (loading) {
     return <Spinner />;
   }
 
   if (!creator) {
-    return <div>Sorry, you do not own this newsletter</div>;
+    return <div className="color-text">Sorry, you do not own this newsletter</div>;
   }
 
   return (
-    <div>
-      <header>
-        <p>Upload a new edition</p>
-      </header>
+    <div className="form-container">
+      <div className="form-card center">
+        <header className="create-header">
+          <h3 className="color-text">Upload a new edition</h3>
+        </header>
 
-      <main>
-        <form onSubmit={onSubmit}>
-          <label>Title: </label>
-          <input
-            type="text"
-            className="formInputTitle"
-            id="title"
-            value={title}
-            onChange={onMutate}
-            maxLength="60"
-            required
-          />
+        <main>
+          <form className="sign-in-form create center" onSubmit={onSubmit}>
+            <label htmlFor="title">
+              Title
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={onMutate}
+                maxLength="60"
+                required
+              />
+            </label>
 
-          <label>Price in sats</label>
-          <input
-            type="number"
-            className="formInputPrice"
-            id="price"
-            value={price}
-            onChange={onMutate}
-            required
-          />
+            <label htmlFor="price">
+              Price in sats
 
-          <label>Source</label>
-          <p className="fileInfo">
-            Please upload a PDF for this edition
-          </p>
-          <input
-            className="formInputFile"
-            type="file"
-            id="file"
-            onChange={onMutate}
-            accept=".pdf,.doc,.docx"
-            required
-          />
-          <button type="submit">
-            Create Edition
-          </button>
-        </form>
-      </main>
+              <input
+                type="number"
+                id="price"
+                value={price}
+                onChange={onMutate}
+                required
+              />
+            </label>
+
+            <label htmlFor="file">
+              Source
+              <p className="fileInfo">
+                Please upload a PDF for this edition
+              </p>
+              <input
+                className="formInputFile"
+                type="file"
+                id="file"
+                onChange={onMutate}
+                accept=".pdf,.doc,.docx"
+                required
+              />
+            </label>
+
+            <label htmlFor="preview">
+              Short preview
+              <br/>
+              <textarea
+                type="text"
+                id="preview"
+                value={preview}
+                onChange={onMutate}
+                required
+              />
+              <br/>
+              Or
+              <br/>
+              <button className="current-btn" type="button" onClick={generatePreview}>
+                Generate preview
+              </button>
+            </label>
+
+            <button className="gradient-btn" type="submit">
+              Create Edition
+            </button>
+          </form>
+        </main>
+      </div>
+
     </div>
   );
 }

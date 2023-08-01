@@ -39,7 +39,7 @@ function SignIn() {
   return (
     <div className="sign-in-container">
       <header>
-        <h3>
+        <h3 className="color-text">
           Welcome Back
         </h3>
         <br />
@@ -49,7 +49,6 @@ function SignIn() {
         <form className="sign-in-form" onSubmit={onSubmit}>
           <input
             type="email"
-            className="emailInput"
             placeholder="Email"
             id="email"
             value={email}
@@ -57,7 +56,6 @@ function SignIn() {
           />
           <input
             type="password"
-            className="passwordInput"
             placeholder="Password"
             id="password"
             value={password}

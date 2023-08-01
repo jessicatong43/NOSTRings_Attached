@@ -22,7 +22,7 @@ function ForgotPassword() {
   return (
     <div className="sign-in-container">
       <header>
-        <h3>
+        <h3 className="color-text">
           Reset Password
         </h3>
         <br />
