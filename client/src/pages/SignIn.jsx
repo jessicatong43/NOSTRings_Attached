@@ -37,7 +37,7 @@ function SignIn() {
   };
 
   return (
-    <div className="sign-in-container">
+    <div className="sign-in-container container">
       <header>
         <h3 className="color-text">
           Welcome Back
