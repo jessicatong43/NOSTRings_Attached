@@ -29,6 +29,7 @@ body {
   margin: 0;
   background-color: var(--bg-color);
   color: var(--main-text-color);
+  max-width: 1280px;
 }
 
 .gradient-text {
@@ -146,38 +147,23 @@ button {
   justify-content: space-between;
   min-height: 60px;
   background: var(--secondary-text-color);;
-  padding: 0 30px;
+  padding: 10px 30px;
 }
 
-.text-card {
-  display: grid;
-  grid-template-columns: 1fr 120px;
-  column-gap: 20px;
-  border: 2px solid var(--secondary-text-color);
-  background: none;
-  box-shadow: 4px 4px 20px #595959;
-  border-radius: 1rem;
-  padding: 20px;
-  margin: 20px 20px;
-  max-width: 60vw;
+.nav-bar button {
+  margin: 5px;
 }
 
-.card-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.color-select {
+/* .color-select {
   background: var(--gradient-1);
   border-radius: 0.5rem;
-}
+} */
 
-.translator {
+/* .translator {
   display: grid;
   align-items: center;
   justify-content: center;
-}
+} */
 
 
 /* ========= LOADING SPINNER ========= */
@@ -231,10 +217,6 @@ ul {
 .newsletter-editions {
   min-width: calc(60vw + 40px);
   margin: 20px 20px;
-}
-
-.price {
-  text-align: center;
 }
 
 .newsletter-info {
@@ -291,20 +273,61 @@ margin: 5px 0 15px 0;
   padding: 5px 10px;
 }
 
+/* ========= EDITIONS ========= */
+
+.text-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  border: 2px solid var(--secondary-text-color);
+  background: none;
+  box-shadow: 4px 4px 20px #595959;
+  border-radius: 1rem;
+  padding: 20px;
+  margin: 20px 20px;
+  min-width: 220px;
+  max-width: 700px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.edition-details {
+  min-width: 200px;
+  max-width: 575px;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.price {
+  text-align: center;
+}
+
+.buy-btn {
+  margin: 5px 0;
+}
+
 /* ========= SEARCHBAR ========= */
 
 #search form {
   margin: 30px;
-  /* display: grid; */
-  /* grid-template-columns: 1fr 100px; */
   max-width: 100vw;
 }
 
-.searchInput {
+.search-input {
   border: 0px;
   border-radius: 15px;
   min-width: 60vw;
+  margin-right: 10px;
   padding: 5px 10px;
+}
+
+.search-btn {
+  margin-left: 0;
 }
 
 /* ========= EXPLORE ========= */
@@ -316,15 +339,15 @@ margin: 5px 0 15px 0;
 }
 
 .newsletter-card {
-  width: 150px;
-  height: 250px;
+  width: 180px;
+  height: 225px;
   border: 2px solid;
   border-color: var(--secondary-text-color);
   border-radius: 20px;
   margin: 0px 20px 20px 0px;
   padding: 20px;
   display: grid;
-  grid-template-rows: 1fr 2fr 25px;
+  grid-template-rows: 1fr 25px;
 }
 
 .newsletter-card:hover {
@@ -339,6 +362,7 @@ margin: 5px 0 15px 0;
 }
 
 .newsletter-author {
+  margin-bottom: 15px;
   font-style: italic;
   font-weight: 400;
 }

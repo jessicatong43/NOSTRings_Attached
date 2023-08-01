@@ -17,9 +17,7 @@ function ExploreCard({ newsletter, newsletterId }) {
           {' '}
           {newsletter.author}
         </h5>
-      </div>
-      <div>
-        <p id="newsletter-details">{newsletter.summary}</p>
+        <p className="newsletter-summary">{newsletter.summary}</p>
       </div>
       <small>
         {newsletter.subscribers.length}
