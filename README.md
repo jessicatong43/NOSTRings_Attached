@@ -5,7 +5,7 @@
 
 ---
 
-*If you would like a demo without using your information to sign up:
+*Users do not need to sign in to purchase editions. However, if you would like to demo all features without using your information to sign up, feel free to use the credentials below:
 <br>
 Email: guest@gmail.com
 <br>
