@@ -23,6 +23,33 @@ function Payment() {
   const navigate = useNavigate();
   const emailId = useId();
 
+  const sendEmail = () => {
+    const editionRef = doc(db, 'Newsletters', params.newsletterId, 'editions', params.editionId);
+    updateDoc(editionRef, {
+      paid: arrayUnion(details.email),
+    });
+    const data = {
+      service_id: process.env.SERVICE_ID,
+      template_id: process.env.TEMPLATE_ID,
+      user_id: process.env.EMAILJS_PUBLIC_KEY,
+      template_params: {
+        to_email: details.email,
+        url: details.source,
+        newsletter_title: newsletter.title,
+        preview: details.preview,
+      },
+    };
+
+    axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
+      .then(() => {
+        setSuccess(true);
+        toast.success("Payment successful, you'll receive an email shortly!");
+      })
+      .catch((err) => {
+        toast.success('Sorry, we were unable to send your purchase. Please contact support!');
+      });
+  };
+
   const fetchLn = async () => {
     try {
       const ln = new LightningAddress(details.address);
@@ -40,48 +67,54 @@ function Payment() {
       }
 
       setLoading(false);
-      setInvoiceGenerated(true);
-      setInvoiceDetails(() => invoice);
 
-      const start = Date.now();
-
-      const interval = setInterval(async () => {
-        if (Date.now() - start > 200000) {
-          clearInterval(interval);
+      try {
+        await window.webln.enable();
+        const response = await window.webln.sendPayment(invoice.paymentRequest);
+        if (response.preimage) {
+          sendEmail();
         }
-        const status = await axios.get(`/verifyPayment?verify=${invoice.verify}`);
+      } catch {
+        setInvoiceGenerated(true);
+        setInvoiceDetails(() => invoice);
 
-        const { settled } = status.data;
-        if (settled) {
-          const editionRef = doc(db, 'Newsletters', params.newsletterId, 'editions', params.editionId);
-          updateDoc(editionRef, {
-            paid: arrayUnion(details.email),
-          });
+        const start = Date.now();
 
-          const data = {
-            service_id: process.env.SERVICE_ID,
-            template_id: process.env.TEMPLATE_ID,
-            user_id: process.env.EMAILJS_PUBLIC_KEY,
-            template_params: {
-              to_email: details.email,
-              url: details.source,
-              newsletter_title: newsletter.title,
-              preview: details.preview,
-            },
-          };
+        const interval = setInterval(async () => {
+          if (Date.now() - start > 200000) {
+            clearInterval(interval);
+          }
+          const status = await axios.get(`/verifyPayment?verify=${invoice.verify}`);
 
-          axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
-            .then(() => {
-              setSuccess(true);
-              toast.success("Payment successful, you'll receive an email shortly!");
-            })
-            .catch((err) => {
-              toast.success('Sorry, we were unable to send your purchase. Please contact support!');
-            });
+          const { settled } = status.data;
+          if (settled) {
+            sendEmail();
 
-          clearInterval(interval);
-        }
-      }, 5000);
+            // const data = {
+            //   service_id: process.env.SERVICE_ID,
+            //   template_id: process.env.TEMPLATE_ID,
+            //   user_id: process.env.EMAILJS_PUBLIC_KEY,
+            //   template_params: {
+            //     to_email: details.email,
+            //     url: details.source,
+            //     newsletter_title: newsletter.title,
+            //     preview: details.preview,
+            //   },
+            // };
+
+            // axios.post('https://api.emailjs.com/api/v1.0/email/send', data)
+            //   .then(() => {
+            //     setSuccess(true);
+            //     toast.success("Payment successful, you'll receive an email shortly!");
+            //   })
+            //   .catch((err) => {
+            //     toast.success('Sorry, we were unable to send your purchase. Please contact support!');
+            //   });
+
+            clearInterval(interval);
+          }
+        }, 5000);
+      }
     } catch (err) {
       toast.error('Sorry, we were unable verify the authors address');
       navigate(`/newsletter/${params.newsletterId}`);
@@ -159,7 +192,7 @@ function Payment() {
         <header className="center invoice-header">
           <h3>Thank you for your purchase!</h3>
         </header>
-        <main>
+        <main className="center">
           <button type="button" className="gradient-btn" onClick={() => navigate('/')}>
             Home
           </button>

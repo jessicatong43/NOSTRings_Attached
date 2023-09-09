@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function EditionCard({ details }) {
+function EditionCard({ details, paid }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -17,12 +17,21 @@ function EditionCard({ details }) {
       </div>
 
       <div className="price">
-        <p>
-          Price:
-          {` ${details.price} sats`}
-          <br />
-          <button type="button" className="gradient-btn buy-btn" onClick={handleClick}>Buy!</button>
-        </p>
+        {paid
+          ? (
+            <p>
+              Price:
+              {` ${details.price} sats`}
+            </p>
+          )
+          : (
+            <p>
+              Price:
+              {` ${details.price} sats`}
+              <br />
+              <button type="button" className="gradient-btn buy-btn" onClick={handleClick}>Buy!</button>
+            </p>
+          )}
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import Payment from '../pages/Payment';
 import CreateNewsletter from '../pages/CreateNewsletter';
 import Profile from '../pages/Profile';
 import PrivateRoute from './PrivateRoute';
+import Dashboard from '../pages/Dashboard';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
           <Route path="/create-newsletter" element={<CreateNewsletter />} />
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
+          </Route>
+          <Route path="/dashboard" element={<PrivateRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

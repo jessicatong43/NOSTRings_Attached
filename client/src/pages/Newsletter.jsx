@@ -26,7 +26,7 @@ function Newsletter() {
 
     const editionsRef = collection(db, `Newsletters/${params.newsletterId}/editions`);
 
-    const q = query(editionsRef, orderBy('created'));
+    const q = query(editionsRef, orderBy('created', 'desc'));
 
     const [editionsSnap, docSnap] = await Promise.all([getDocs(q), getDoc(docRef)]);
     const arr = [];
@@ -108,7 +108,7 @@ function Newsletter() {
         <div className="newsletter-editions">
           {displayedEditions?.length > 0
             ? <EditionList editions={displayedEditions} />
-            : <div>No editions found</div>}
+            : <div className="color-text">No editions found</div>}
 
         </div>
 

@@ -64,14 +64,15 @@ function Profile() {
       <main className="profile-grid">
         <section>
           <div className="profile-newsletter-header">
-            <h3>Your Newsletters</h3>
-            <Link to="/create-newsletter" className="createNewsletter">
-              <p>+ Create</p>
-            </Link>
+            <h3 className="color-text">Your Newsletters</h3>
+            <br />
           </div>
           <div>
             {!loading && newsletters?.length > 0 ? (
               <ul className="yourNewsletters">
+                <Link to="/create-newsletter" className="createNewsletter create-btn">
+                  <p>+ Create</p>
+                </Link>
                 {newsletters.map((newsletter) => (
                   <ExploreCard
                     key={newsletter.id}
@@ -90,6 +91,10 @@ function Profile() {
           <br />
           <small>Email</small>
           <p>{auth.currentUser.email || null}</p>
+          <br />
+          {/* <Link to="/create-newsletter" className="createNewsletter">
+            <p>+ Create</p>
+          </Link> */}
           <br />
           <button
             type="button"
